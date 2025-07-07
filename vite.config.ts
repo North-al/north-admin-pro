@@ -9,7 +9,7 @@ import * as path from 'path'
 export default defineConfig({
     resolve: {
         alias: {
-            '@/': path.resolve(__dirname, './src/')
+            '~': path.resolve(__dirname, 'src')
         }
     },
     plugins: [
@@ -24,7 +24,7 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
-                additionalData: `@use "~/styles/element/index.scss" as *;`
+                // additionalData: `@use "~/styles/el-dark.scss" as *;`
             }
         }
     }
