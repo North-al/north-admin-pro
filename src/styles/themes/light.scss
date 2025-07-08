@@ -1,0 +1,165 @@
+/* 浅色主题样式 */
+
+/* 全局背景和文字颜色 */
+html[data-theme='light'],
+html[data-theme='light'] body {
+    background-color: #ffffff;
+    color: #303133;
+}
+
+#app[data-theme='light'] {
+    background-color: #ffffff;
+    color: #303133;
+}
+
+/* 滚动条浅色主题 */
+html[data-theme='light'] ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+html[data-theme='light'] ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+}
+
+html[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 布局组件浅色主题 */
+.layout[data-theme='light'] {
+    background-color: #ffffff;
+    color: #303133;
+}
+
+/* 侧边栏浅色主题 */
+.layout-sidebar[data-theme='light'] {
+    background: #001529;
+    border-right: 1px solid #e8eaec;
+}
+
+.sidebar-logo[data-theme='light'] {
+    background-color: rgba(0, 21, 41, 0.8);
+    border-bottom: 1px solid #1d2b3a;
+}
+
+.sidebar-logo[data-theme='light'] .logo-text {
+    color: #409eff;
+    font-weight: 700;
+}
+
+/* 顶部导航浅色主题 */
+.header-bar[data-theme='light'] {
+    background: #fff;
+    border-bottom: 1px solid #e8eaec;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.header-bar[data-theme='light'] .collapse-btn,
+.header-bar[data-theme='light'] .action-btn {
+    color: #606266;
+}
+
+.header-bar[data-theme='light'] .collapse-btn:hover,
+.header-bar[data-theme='light'] .action-btn:hover {
+    background-color: #f5f7fa;
+    color: #409eff;
+}
+
+.header-bar[data-theme='light'] .user-info {
+    color: #606266;
+}
+
+.header-bar[data-theme='light'] .user-info:hover {
+    background-color: #f5f7fa;
+}
+
+/* 面包屑浅色主题 */
+.breadcrumb[data-theme='light'] .el-breadcrumb__inner {
+    color: #606266;
+}
+
+.breadcrumb[data-theme='light'] .el-breadcrumb__inner.is-link {
+    color: #409eff;
+}
+
+.breadcrumb[data-theme='light'] .el-breadcrumb__inner.is-link:hover {
+    color: #66b1ff;
+}
+
+/* 标签页浅色主题 */
+.tags-view[data-theme='light'] {
+    background: #fff;
+    border-bottom: 1px solid #e8eaec;
+}
+
+.tags-view[data-theme='light'] .el-tabs__item {
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    color: #666;
+}
+
+.tags-view[data-theme='light'] .el-tabs__item:hover {
+    color: #409eff;
+    border-color: #409eff;
+}
+
+.tags-view[data-theme='light'] .el-tabs__item.is-active {
+    background: #409eff;
+    border-color: #409eff;
+    color: #fff;
+}
+
+/* 主内容区浅色主题 */
+.layout-content[data-theme='light'] {
+    background: #f0f2f5;
+}
+
+/* 菜单浅色主题 */
+.sidebar-menu[data-theme='light'] .el-menu {
+    background: transparent;
+}
+
+.sidebar-menu[data-theme='light'] .el-menu-item {
+    color: #bfcbd9;
+}
+
+.sidebar-menu[data-theme='light'] .el-menu-item:hover {
+    background-color: #1d2b3a;
+    color: #409eff;
+}
+
+.sidebar-menu[data-theme='light'] .el-menu-item.is-active {
+    background-color: #409eff;
+    color: #fff;
+}
+
+.sidebar-menu[data-theme='light'] .el-sub-menu__title {
+    color: #bfcbd9;
+}
+
+.sidebar-menu[data-theme='light'] .el-sub-menu__title:hover {
+    background-color: #1d2b3a;
+    color: #409eff;
+}
+
+/* Element Plus 组件浅色主题 */
+.el-dropdown-menu[data-theme='light'] {
+    background-color: #fff;
+    border: 1px solid #ebeef5;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.el-dropdown-menu[data-theme='light'] .el-dropdown-menu__item {
+    color: #606266;
+}
+
+.el-dropdown-menu[data-theme='light'] .el-dropdown-menu__item:hover {
+    background-color: #f5f7fa;
+    color: #409eff;
+}
+
+/* 徽章浅色主题 */
+.menu-badge[data-theme='light'] .el-badge__content {
+    background-color: #f56c6c;
+    border-color: #f56c6c;
+}

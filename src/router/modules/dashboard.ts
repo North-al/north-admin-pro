@@ -1,6 +1,6 @@
-import type { RouteConfig } from 'src/typings/router'
+import type { RouteRecordRaw } from 'vue-router'
 
-export const dashboardRoutes: RouteConfig[] = [
+export const dashboardRoutes: RouteRecordRaw[] = [
     {
         path: '/dashboard',
         name: 'Dashboard',

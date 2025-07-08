@@ -39,7 +39,7 @@ export default defineConfig({
             deep: true,
             include: [/\.vue$/, /\.vue\?vue/],
             exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/],
-            resolvers: [ElementPlusResolver()]
+            resolvers: [ElementPlusResolver({ importStyle: 'sass' })]
         })
     ],
     css: {

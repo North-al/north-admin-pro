@@ -1,0 +1,110 @@
+/* Element Plus 全局样式自定义（无关主题颜色） */
+
+/* 菜单组件 */
+.el-menu {
+    border-right: none !important;
+}
+
+.el-menu--horizontal {
+    border-bottom: none !important;
+}
+
+.el-menu-item {
+    border-radius: 8px;
+    margin: 2px 8px;
+    transition: all 0.3s ease;
+}
+
+.el-sub-menu__title {
+    border-radius: 8px;
+    margin: 2px 8px;
+    transition: all 0.3s ease;
+}
+
+/* 标签页组件 */
+.el-tabs__header {
+    margin: 0 !important;
+    border-bottom: none !important;
+}
+
+.el-tabs__nav {
+    border: none !important;
+}
+
+.el-tabs__item {
+    height: 32px !important;
+    line-height: 32px !important;
+    border-radius: 6px !important;
+    margin: 8px 4px 8px 0 !important;
+    padding: 0 16px !important;
+    font-size: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.el-tabs__content {
+    display: none !important;
+}
+
+.el-icon-close {
+    margin-left: 8px !important;
+    border-radius: 50% !important;
+    transition: background-color 0.3s ease !important;
+}
+
+/* 下拉菜单组件 */
+.el-dropdown-menu {
+    border-radius: 8px !important;
+    padding: 8px !important;
+}
+
+.el-dropdown-menu__item {
+    border-radius: 6px !important;
+    margin: 2px 0 !important;
+    padding: 8px 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 徽章组件 */
+.el-badge__content {
+    font-size: 10px !important;
+    height: 18px !important;
+    line-height: 18px !important;
+    padding: 0 6px !important;
+    border-radius: 9px !important;
+}
+
+/* 面包屑组件 */
+.el-breadcrumb {
+    font-size: 14px !important;
+}
+
+.el-breadcrumb__inner {
+    font-weight: normal !important;
+    transition: color 0.3s ease !important;
+}
+
+/* 按钮组件 */
+.el-button {
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 头像组件 */
+.el-avatar {
+    transition: all 0.3s ease !important;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}

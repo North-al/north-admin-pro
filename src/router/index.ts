@@ -6,17 +6,20 @@ import { dashboardRoutes } from './modules/dashboard'
 const baseRoutes: RouteRecordRaw[] = [
     {
         path: '/',
-        redirect: '/dashboard'
-    },
-    {
-        path: '/layout',
         name: 'Layout',
         component: () => import('~/layouts/index.vue'),
         redirect: '/dashboard',
-        children: [...(dashboardRoutes as RouteRecordRaw[])]
+        children: [...dashboardRoutes]
     },
-    // ...authRoutes,
-    // ...errorRoutes,
+    {
+        path: '/404',
+        name: 'Error404',
+        component: () => import('~/pages/error/404.vue'),
+        meta: {
+            title: '404',
+            hidden: true
+        }
+    },
     {
         path: '/:pathMatch(.*)*',
         redirect: '/404'
@@ -26,7 +29,7 @@ const baseRoutes: RouteRecordRaw[] = [
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: baseRoutes,
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(_, __, savedPosition) {
         if (savedPosition) {
             return savedPosition
         }
@@ -35,7 +38,7 @@ const router = createRouter({
 })
 
 // 全局后置守卫
-router.afterEach((to, from) => {
+router.afterEach(to => {
     // 设置页面标题
     document.title = to.meta?.title ? `${to.meta.title} - 后台管理系统` : '后台管理系统'
 
