@@ -1,5 +1,5 @@
 export const setupStyles = () => {
-    import('../style.css')
+    import('./reset.scss')
     import('element-plus/theme-chalk/dark/css-vars.css')
     import('./el-light.scss')
     import('./el-dark.scss')

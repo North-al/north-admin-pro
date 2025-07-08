@@ -1,39 +1,12 @@
 <script setup lang="ts">
-    import HelloWorld from './components/HelloWorld.vue'
+    import zh from 'element-plus/es/locale/lang/zh-cn'
+    import en from 'element-plus/es/locale/lang/en'
 </script>
 
 <template>
-    <div>
-        <el-button type="primary">测试</el-button>
-        <el-button type="success">测试</el-button>
-        <el-button type="danger">测试</el-button>
-        <el-button type="warning">测试</el-button>
-        <div></div>
-        <el-tag type="primary">测试</el-tag>
-        <el-tag type="success">测试</el-tag>
-        <el-tag type="warning">测试</el-tag>
-        <el-tag type="danger">测试</el-tag>
-        <a href="https://vite.dev" target="_blank">
-            <img src="/vite.svg" class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://vuejs.org/" target="_blank">
-            <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-        </a>
-    </div>
-    <HelloWorld msg="Vite + Vue" />
+    <el-config-provider :locale="zh">
+        <router-view></router-view>
+    </el-config-provider>
 </template>
 
-<style scoped>
-    .logo {
-        height: 6em;
-        padding: 1.5em;
-        will-change: filter;
-        transition: filter 300ms;
-    }
-    .logo:hover {
-        filter: drop-shadow(0 0 2em #646cffaa);
-    }
-    .logo.vue:hover {
-        filter: drop-shadow(0 0 2em #42b883aa);
-    }
-</style>
+<style scoped lang="scss"></style>

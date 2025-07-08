@@ -15,9 +15,30 @@ export default defineConfig({
     plugins: [
         vue(),
         AutoImport({
+            imports: [
+                'vue',
+                'vue-router',
+                'pinia',
+                {
+                    // add any other imports you were relying on
+                }
+            ],
+            dts: 'src/typings/auto-imports.d.ts',
+            dirs: ['src/stores'],
+            vueTemplate: true,
+            eslintrc: {
+                enabled: true, // Default `false`
+                filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+                globalsPropValue: true // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+            },
             resolvers: [ElementPlusResolver()]
         }),
         Components({
+            dts: 'src/typings/components.d.ts',
+            extensions: ['vue'], // extensions: ['vue']
+            deep: true,
+            include: [/\.vue$/, /\.vue\?vue/],
+            exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/],
             resolvers: [ElementPlusResolver()]
         })
     ],
