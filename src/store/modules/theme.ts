@@ -96,7 +96,15 @@ export const useThemeStore = defineStore('theme', () => {
         const effectiveTheme = theme === 'auto' ? getSystemTheme() : theme
         actualTheme.value = effectiveTheme as Exclude<ThemeType, 'auto'>
 
+        // 设置data-theme属性
         document.documentElement.setAttribute('data-theme', effectiveTheme)
+
+        // 为Element Plus设置主题class
+        // mixed主题下，元素组件使用light主题
+        const elementTheme = effectiveTheme === 'dark' ? 'dark' : 'light'
+        document.documentElement.className =
+            document.documentElement.className.replace(/\b(dark|light)\b/g, '').trim() + ` ${elementTheme}`
+
         localStorage.setItem('app-theme', theme)
 
         // 触发自定义事件

@@ -327,7 +327,7 @@
                     .el-menu-item {
                         height: 40px;
                         line-height: 40px;
-                        margin: 1px 12px 1px 36px;
+                        margin: 4px 12px 4px 36px;
                         padding-left: 20px;
 
                         .menu-icon {
@@ -403,15 +403,20 @@
         }
     }
 
-    // 确保弹出菜单的主题一致性
-    :global(.el-popper) {
+    // 确保弹出菜单的主题一致性 - 使用全局样式注入
+    :global(.el-popper[data-popper-placement]) {
         .el-menu--popup {
             background: var(--sidebar-bg-color) !important;
             border: 1px solid var(--sidebar-border-color) !important;
-            box-shadow: var(--app-shadow-color) 0 2px 12px !important;
+            box-shadow: 0 4px 20px var(--app-shadow-color) !important;
+            border-radius: 8px !important;
 
             .el-menu-item {
                 color: var(--sidebar-text-color) !important;
+                background: transparent !important;
+                margin: 2px 8px !important;
+                border-radius: 6px !important;
+                transition: all 0.2s ease !important;
 
                 &:hover {
                     background-color: var(--sidebar-hover-bg) !important;
@@ -419,8 +424,8 @@
                 }
 
                 &.is-active {
-                    background-color: var(--sidebar-active-bg) !important;
                     color: var(--sidebar-text-active) !important;
+                    font-weight: 600 !important;
                 }
             }
         }

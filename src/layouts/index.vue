@@ -79,7 +79,7 @@
             <div class="sidebar-logo" :data-theme="appliedTheme">
                 <img v-if="!themeStore.sidebarCollapsed" src="/vite.svg" alt="Logo" class="logo-img" />
                 <img v-else src="/vite.svg" alt="Logo" class="logo-img-mini" />
-                <span v-if="!themeStore.sidebarCollapsed" class="logo-text">Art Design Pro</span>
+                <span v-if="!themeStore.sidebarCollapsed" class="logo-text">North Admin</span>
             </div>
 
             <SidebarMenu :collapsed="themeStore.sidebarCollapsed" :data-theme="appliedTheme" />

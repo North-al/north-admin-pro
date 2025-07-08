@@ -97,14 +97,7 @@
     <header class="header-bar" :data-theme="currentTheme">
         <div class="header-left">
             <!-- 菜单折叠按钮 -->
-            <el-tooltip :content="collapsed ? '展开菜单' : '折叠菜单'" placement="bottom">
-                <el-button type="text" class="collapse-btn" @click="handleToggleCollapse">
-                    <el-icon size="20">
-                        <Expand v-if="collapsed" />
-                        <Fold v-else />
-                    </el-icon>
-                </el-button>
-            </el-tooltip>
+            <el-button :icon="collapsed ? 'Expand' : 'Fold'" circle @click="handleToggleCollapse" />
 
             <!-- 面包屑导航 -->
             <el-breadcrumb separator="/" class="breadcrumb">
@@ -119,33 +112,27 @@
             <ThemeToggle />
 
             <!-- 全屏按钮 -->
-            <el-tooltip :content="isFullscreen ? '退出全屏' : '进入全屏'" placement="bottom">
-                <el-button type="text" class="action-btn" @click="toggleFullscreen">
-                    <el-icon size="18">
-                        <FullScreen />
-                    </el-icon>
-                </el-button>
-            </el-tooltip>
+            <el-button text class="action-btn" @click="toggleFullscreen">
+                <el-icon size="18">
+                    <FullScreen />
+                </el-icon>
+            </el-button>
 
             <!-- 消息通知 -->
-            <el-tooltip content="消息通知" placement="bottom">
-                <el-badge :value="notificationCount" :hidden="notificationCount === 0" class="notification-badge">
-                    <el-button type="text" class="action-btn">
-                        <el-icon size="18">
-                            <Bell />
-                        </el-icon>
-                    </el-button>
-                </el-badge>
-            </el-tooltip>
-
-            <!-- 设置按钮 -->
-            <el-tooltip content="系统设置" placement="bottom">
-                <el-button type="text" class="action-btn" @click="handleOpenSettings">
+            <el-badge :value="notificationCount" :hidden="notificationCount === 0" class="notification-badge">
+                <el-button text class="action-btn">
                     <el-icon size="18">
-                        <Setting />
+                        <Bell />
                     </el-icon>
                 </el-button>
-            </el-tooltip>
+            </el-badge>
+
+            <!-- 设置按钮 -->
+            <el-button text class="action-btn" @click="handleOpenSettings">
+                <el-icon size="18">
+                    <Setting />
+                </el-icon>
+            </el-button>
 
             <!-- 用户信息下拉菜单 -->
             <el-dropdown class="user-dropdown" @command="handleCommand">
@@ -194,8 +181,8 @@
         .collapse-btn,
         .action-btn {
             color: var(--header-text-color);
-            border-radius: 6px;
-            transition: all 0.2s ease;
+            // border-radius: 6px;
+            // transition: all 0.2s ease;
 
             &:hover {
                 background-color: var(--app-hover-bg, rgba(0, 0, 0, 0.05));

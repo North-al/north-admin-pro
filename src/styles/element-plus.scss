@@ -83,12 +83,6 @@
     transition: color 0.3s ease !important;
 }
 
-/* 按钮组件 */
-.el-button {
-    border-radius: 6px !important;
-    transition: all 0.3s ease !important;
-}
-
 /* 头像组件 */
 .el-avatar {
     transition: all 0.3s ease !important;
@@ -107,4 +101,54 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     transition: background-color 0.3s ease;
+}
+
+/* 子菜单弹出层的全局样式覆盖 */
+.el-popper .el-menu--popup-container {
+    background-color: var(--sidebar-bg-color) !important;
+    .el-menu--popup {
+        background: var(--sidebar-bg-color) !important;
+        border: 1px solid var(--sidebar-border-color) !important;
+        box-shadow: 0 4px 20px var(--app-shadow-color) !important;
+        border-radius: 8px !important;
+        padding: 4px 0 !important;
+
+        .el-menu-item {
+            color: var(--sidebar-text-color) !important;
+            background: transparent !important;
+            margin: 4px 8px !important;
+            border-radius: 6px !important;
+            transition: all 0.2s ease !important;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 20px;
+            font-weight: normal !important;
+
+            &:hover {
+                background-color: var(--sidebar-hover-bg) !important;
+                color: var(--sidebar-text-active) !important;
+            }
+
+            &.is-active {
+                background-color: var(--sidebar-active-bg) !important;
+                color: var(--sidebar-text-active) !important;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 3px;
+                    height: 20px;
+                    background-color: var(--sidebar-text-active);
+                    border-radius: 0 2px 2px 0;
+                }
+            }
+        }
+    }
+}
+
+:global(.el-popper[data-popper-placement]) {
+    background-color: transparent !important;
 }

@@ -27,7 +27,7 @@
 
 <template>
     <el-dropdown trigger="click" @command="setTheme">
-        <el-button type="text" class="theme-toggle">
+        <el-button text class="theme-toggle">
             <el-icon size="18">
                 <component :is="currentIcon" />
             </el-icon>

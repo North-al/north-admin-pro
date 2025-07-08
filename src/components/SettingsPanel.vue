@@ -10,7 +10,7 @@
             <!-- 主题设置 -->
             <div class="settings-section">
                 <h3 class="section-title">
-                    <el-icon><Palette /></el-icon>
+                    <el-icon><PartlyCloudy /></el-icon>
                     主题模式
                 </h3>
 

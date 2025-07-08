@@ -60,23 +60,30 @@ button {
     justify-content: center;
     padding: 0 16px;
     flex-shrink: 0;
+    background: var(--sidebar-bg-color);
+    border-bottom: 1px solid var(--sidebar-border-color);
+    transition: all 0.3s ease;
 }
 
 .logo-img {
     width: 32px;
     height: 32px;
     margin-right: 12px;
+    transition: all 0.3s ease;
 }
 
 .logo-img-mini {
     width: 32px;
     height: 32px;
+    transition: all 0.3s ease;
 }
 
 .logo-text {
     font-size: 18px;
     font-weight: 600;
     white-space: nowrap;
+    color: var(--sidebar-text-color);
+    transition: all 0.3s ease;
 }
 
 .layout-main {
