@@ -1,7 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed, watch } from 'vue'
-    import { useRoute, useRouter } from 'vue-router'
-    import { ElTabs, ElTabPane, ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
+    import { useThemeStore } from '../../store/modules/theme'
 
     interface TagItem {
         name: string
@@ -12,13 +10,17 @@
 
     const route = useRoute()
     const router = useRouter()
+    const themeStore = useThemeStore()
+
+    // 获取当前主题
+    const currentTheme = computed(() => themeStore.computedTheme)
 
     // 标签页列表
     const tags = ref<TagItem[]>([
         {
             name: 'Dashboard',
             path: '/dashboard',
-            title: '仪表板',
+            title: '首页',
             closable: false // 首页不可关闭
         }
     ])
@@ -83,7 +85,7 @@
         switch (command) {
             case 'refresh':
                 // 刷新当前页面
-                location.reload()
+                window.location.reload()
                 break
             case 'close':
                 removeTag(targetPath)
@@ -105,7 +107,7 @@
 </script>
 
 <template>
-    <div class="tags-view" :data-theme="$attrs['data-theme']">
+    <div class="tags-view" :data-theme="currentTheme">
         <el-tabs v-model="activeTag" type="card" class="tags-tabs" @tab-click="handleTabClick" @tab-remove="removeTag">
             <el-tab-pane
                 v-for="tag in tags"
@@ -121,19 +123,19 @@
                         <template #dropdown>
                             <el-dropdown-menu>
                                 <el-dropdown-item command="refresh">
-                                    <el-icon><component :is="'refresh'" /></el-icon>
+                                    <el-icon><Refresh /></el-icon>
                                     刷新页面
                                 </el-dropdown-item>
                                 <el-dropdown-item command="close" :disabled="!tag.closable">
-                                    <el-icon><component :is="'close'" /></el-icon>
+                                    <el-icon><Close /></el-icon>
                                     关闭标签
                                 </el-dropdown-item>
                                 <el-dropdown-item command="close-others">
-                                    <el-icon><component :is="'circle-close'" /></el-icon>
+                                    <el-icon><CircleClose /></el-icon>
                                     关闭其他
                                 </el-dropdown-item>
                                 <el-dropdown-item command="close-all">
-                                    <el-icon><component :is="'folder-delete'" /></el-icon>
+                                    <el-icon><FolderDelete /></el-icon>
                                     关闭所有
                                 </el-dropdown-item>
                             </el-dropdown-menu>
@@ -146,10 +148,77 @@
 </template>
 
 <style lang="scss" scoped>
-    /* 标签页样式已移至主题文件和全局样式 */
-    .tag-label {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
+    .tags-view {
+        background: var(--tags-bg-color);
+        border-bottom: 1px solid var(--tags-border-color);
+        transition: all 0.3s ease;
+
+        .tags-tabs {
+            :deep(.el-tabs__header) {
+                margin: 0;
+                border-bottom: none;
+                background: transparent;
+
+                .el-tabs__nav-wrap {
+                    padding: 0 12px;
+
+                    .el-tabs__nav-scroll {
+                        .el-tabs__nav {
+                            border: none;
+                            background: transparent;
+
+                            .el-tabs__item {
+                                border: 1px solid var(--tags-border-color);
+                                background: var(--tags-item-bg);
+                                color: var(--app-text-color);
+                                margin-right: 6px;
+                                margin-top: 8px;
+                                margin-bottom: 8px;
+                                border-radius: 6px;
+                                height: 32px;
+                                line-height: 30px;
+                                padding: 0 16px;
+                                font-size: 13px;
+                                font-weight: 500;
+                                transition: all 0.2s ease;
+
+                                &:hover {
+                                    background: var(--tags-item-hover-bg);
+                                    color: var(--el-color-primary);
+                                    border-color: var(--el-color-primary-light-7);
+                                }
+
+                                &.is-active {
+                                    background: var(--tags-item-active-bg);
+                                    color: var(--tags-item-active-color);
+                                    border-color: var(--el-color-primary);
+                                }
+
+                                .is-icon-close {
+                                    border-radius: 50%;
+                                    width: 16px;
+                                    height: 16px;
+                                    line-height: 16px;
+                                    text-align: center;
+                                    transition: all 0.2s ease;
+
+                                    &:hover {
+                                        background: rgba(255, 255, 255, 0.2);
+                                        color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .tag-label {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
     }
 </style>

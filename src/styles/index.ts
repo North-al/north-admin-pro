@@ -9,6 +9,7 @@ export const setupStyles = () => {
     // 导入主题样式
     import('./themes/dark.scss')
     import('./themes/light.scss')
+    import('./themes/mixed.scss')
 
     // 导入 Element Plus 原生主题
     import('element-plus/theme-chalk/dark/css-vars.css')

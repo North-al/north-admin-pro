@@ -1,35 +1,27 @@
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue'
+    import { useTheme } from '../hooks/useTheme'
 
-    // 当前主题
-    const currentTheme = ref('dark')
+    const { currentTheme, setTheme, themeOptions } = useTheme()
 
-    // 主题选项
-    const themes = [
-        { label: '深色主题', value: 'dark' },
-        { label: '浅色主题', value: 'light' }
-    ]
-
-    // 设置主题
-    const setTheme = (theme: string) => {
-        currentTheme.value = theme
-        document.documentElement.setAttribute('data-theme', theme)
-        localStorage.setItem('theme', theme)
-
-        // 触发自定义事件通知其他组件
-        const event = new CustomEvent('theme-change', { detail: theme })
-        window.dispatchEvent(event)
+    // 获取主题图标
+    const getThemeIcon = (theme: string) => {
+        switch (theme) {
+            case 'dark':
+                return 'Moon'
+            case 'light':
+                return 'Sunny'
+            case 'mixed':
+                return 'PartlyCloudy'
+            case 'auto':
+                return 'Monitor'
+            default:
+                return 'Moon'
+        }
     }
 
-    // 初始化主题
-    onMounted(() => {
-        const savedTheme = localStorage.getItem('theme') || 'dark'
-        setTheme(savedTheme)
-    })
-
-    defineExpose({
-        currentTheme,
-        setTheme
+    // 获取当前图标
+    const currentIcon = computed(() => {
+        return getThemeIcon(currentTheme.value)
     })
 </script>
 
@@ -37,19 +29,19 @@
     <el-dropdown trigger="click" @command="setTheme">
         <el-button type="text" class="theme-toggle">
             <el-icon size="18">
-                <component :is="currentTheme === 'dark' ? 'moon' : 'sunny'" />
+                <component :is="currentIcon" />
             </el-icon>
         </el-button>
 
         <template #dropdown>
             <el-dropdown-menu>
                 <el-dropdown-item
-                    v-for="theme in themes"
+                    v-for="theme in themeOptions"
                     :key="theme.value"
                     :command="theme.value"
                     :class="{ 'is-active': currentTheme === theme.value }">
                     <el-icon style="margin-right: 8px">
-                        <component :is="theme.value === 'dark' ? 'moon' : 'sunny'" />
+                        <component :is="getThemeIcon(theme.value)" />
                     </el-icon>
                     {{ theme.label }}
                 </el-dropdown-item>

@@ -1,7 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div>pages</div>
+    <div>
+        <el-card>pages</el-card>
+    </div>
 </template>
 
 <style lang="scss" scoped></style>

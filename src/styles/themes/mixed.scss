@@ -1,6 +1,6 @@
-/* 浅色主题样式 */
-[data-theme='light'] {
-    // 全局基础色彩
+// 混色主题样式
+[data-theme='mixed'] {
+    // 全局基础色彩（浅色）
     --app-bg-color: #fafbfc;
     --app-text-color: #1d2129;
     --app-text-secondary: #4e5969;
@@ -8,26 +8,26 @@
     --app-border-color: #e5e6eb;
     --app-shadow-color: rgba(0, 0, 0, 0.1);
 
-    // 侧边栏主题
-    --sidebar-bg-color: #ffffff;
-    --sidebar-text-color: #1d2129;
-    --sidebar-text-secondary: #4e5969;
-    --sidebar-text-active: #165dff;
-    --sidebar-hover-bg: #f2f3f5;
-    --sidebar-active-bg: #e8f3ff;
-    --sidebar-border-color: #e5e6eb;
+    // 侧边栏主题（深色）
+    --sidebar-bg-color: #232324;
+    --sidebar-text-color: #e5e6eb;
+    --sidebar-text-secondary: #c9cdd4;
+    --sidebar-text-active: #ffffff;
+    --sidebar-hover-bg: rgba(255, 255, 255, 0.08);
+    --sidebar-active-bg: #165dff;
+    --sidebar-border-color: #3c3c3f;
 
-    // 顶部导航
+    // 顶部导航（浅色）
     --header-bg-color: #ffffff;
     --header-text-color: #1d2129;
     --header-border-color: #e5e6eb;
     --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 
-    // 内容区域
+    // 内容区域（浅色）
     --content-bg-color: #fafbfc;
     --content-text-color: #1d2129;
 
-    // 标签页
+    // 标签页（浅色）
     --tags-bg-color: #ffffff;
     --tags-border-color: #e5e6eb;
     --tags-item-bg: #f2f3f5;
@@ -35,12 +35,12 @@
     --tags-item-active-color: #ffffff;
     --tags-item-hover-bg: #e8f3ff;
 
-    // 卡片组件
+    // 卡片组件（浅色）
     --card-bg-color: #ffffff;
     --card-border-color: #e5e6eb;
     --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 
-    // 按钮组件
+    // 按钮组件（浅色）
     --button-default-bg: #ffffff;
     --button-default-border: #e5e6eb;
     --button-default-color: #4e5969;
@@ -54,13 +54,13 @@
     --app-active-bg: rgba(0, 0, 0, 0.08);
     --app-focus-border: #165dff;
 
-    // 输入框组件
+    // 输入框组件（浅色）
     --input-bg-color: #ffffff;
     --input-border-color: #e5e6eb;
     --input-placeholder-color: #86909c;
     --input-focus-border: #165dff;
 
-    // 表格组件
+    // 表格组件（浅色）
     --table-bg-color: #ffffff;
     --table-border-color: #e5e6eb;
     --table-header-bg: #f7f8fa;
@@ -72,14 +72,14 @@
     --scrollbar-thumb-bg: rgba(0, 0, 0, 0.15);
     --scrollbar-thumb-hover-bg: rgba(0, 0, 0, 0.25);
 
-    // 设置面板
+    // 设置面板（浅色）
     --settings-bg-color: #ffffff;
     --settings-border-color: #e5e6eb;
     --settings-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
 }
 
-// 浅色主题下的特殊处理
-[data-theme='light'] {
+// 混色主题下的特殊处理
+[data-theme='mixed'] {
     .layout-sidebar {
         background: var(--sidebar-bg-color);
         border-right: 1px solid var(--sidebar-border-color);
@@ -106,7 +106,7 @@
                 }
 
                 .el-sub-menu .el-menu {
-                    background-color: rgba(0, 0, 0, 0.02);
+                    background-color: rgba(0, 0, 0, 0.1);
                 }
             }
         }
@@ -128,70 +128,4 @@
         background: var(--content-bg-color);
         color: var(--content-text-color);
     }
-}
-
-.tags-view[data-theme='light'] .el-tabs__item:hover {
-    color: #409eff;
-    border-color: #409eff;
-}
-
-.tags-view[data-theme='light'] .el-tabs__item.is-active {
-    background: #409eff;
-    border-color: #409eff;
-    color: #fff;
-}
-
-/* 主内容区浅色主题 */
-.layout-content[data-theme='light'] {
-    background: #f0f2f5;
-}
-
-/* 菜单浅色主题 */
-.sidebar-menu[data-theme='light'] .el-menu {
-    background: transparent;
-}
-
-.sidebar-menu[data-theme='light'] .el-menu-item {
-    color: #bfcbd9;
-}
-
-.sidebar-menu[data-theme='light'] .el-menu-item:hover {
-    background-color: #1d2b3a;
-    color: #409eff;
-}
-
-.sidebar-menu[data-theme='light'] .el-menu-item.is-active {
-    background-color: #409eff;
-    color: #fff;
-}
-
-.sidebar-menu[data-theme='light'] .el-sub-menu__title {
-    color: #bfcbd9;
-}
-
-.sidebar-menu[data-theme='light'] .el-sub-menu__title:hover {
-    background-color: #1d2b3a;
-    color: #409eff;
-}
-
-/* Element Plus 组件浅色主题 */
-.el-dropdown-menu[data-theme='light'] {
-    background-color: #fff;
-    border: 1px solid #ebeef5;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-
-.el-dropdown-menu[data-theme='light'] .el-dropdown-menu__item {
-    color: #606266;
-}
-
-.el-dropdown-menu[data-theme='light'] .el-dropdown-menu__item:hover {
-    background-color: #f5f7fa;
-    color: #409eff;
-}
-
-/* 徽章浅色主题 */
-.menu-badge[data-theme='light'] .el-badge__content {
-    background-color: #f56c6c;
-    border-color: #f56c6c;
 }

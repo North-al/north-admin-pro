@@ -1,32 +1,19 @@
 <script setup lang="ts">
-    import { ref, computed, onMounted } from 'vue'
-    import { useRouter } from 'vue-router'
-    import { ElMessageBox } from 'element-plus'
     import SidebarMenu from './components/SidebarMenu.vue'
     import HeaderBar from './components/HeaderBar.vue'
     import TagsView from './components/TagsView.vue'
+    import SettingsPanel from '../components/SettingsPanel.vue'
+    import { useThemeStore } from '../store/modules/theme'
 
     defineOptions({ name: 'Layout' })
 
     const router = useRouter()
+    const themeStore = useThemeStore()
 
-    // 主题管理
-    const currentTheme = ref('dark') // 默认深色主题
-
-    // 监听主题变化事件
+    // 初始化主题
     onMounted(() => {
-        const savedTheme = localStorage.getItem('theme') || 'dark'
-        currentTheme.value = savedTheme
-        document.documentElement.setAttribute('data-theme', savedTheme)
-
-        // 监听主题切换事件
-        window.addEventListener('theme-change', (event: any) => {
-            currentTheme.value = event.detail
-        })
+        themeStore.initTheme()
     })
-
-    // 侧边栏折叠状态
-    const isCollapsed = ref(false)
 
     // 移动端菜单状态
     const mobileMenuOpen = ref(false)
@@ -36,7 +23,7 @@
         if (window.innerWidth <= 768) {
             mobileMenuOpen.value = !mobileMenuOpen.value
         } else {
-            isCollapsed.value = !isCollapsed.value
+            themeStore.toggleSidebar()
         }
     }
 
@@ -69,8 +56,11 @@
         if (window.innerWidth <= 768) {
             return '250px'
         }
-        return isCollapsed.value ? '64px' : '250px'
+        return themeStore.sidebarCollapsed ? '64px' : '250px'
     })
+
+    // 计算实际应用的主题
+    const appliedTheme = computed(() => themeStore.computedTheme)
 
     // 计算侧边栏类名
     const sidebarClass = computed(() => {
@@ -83,38 +73,41 @@
 </script>
 
 <template>
-    <div class="layout" :data-theme="currentTheme">
+    <div class="layout" :data-theme="appliedTheme">
         <!-- 侧边栏 -->
-        <aside :class="sidebarClass" :style="{ width: sidebarWidth }" :data-theme="currentTheme">
-            <div class="sidebar-logo" :data-theme="currentTheme">
-                <img v-if="!isCollapsed" src="/vite.svg" alt="Logo" class="logo-img" />
+        <aside :class="sidebarClass" :style="{ width: sidebarWidth }" :data-theme="appliedTheme">
+            <div class="sidebar-logo" :data-theme="appliedTheme">
+                <img v-if="!themeStore.sidebarCollapsed" src="/vite.svg" alt="Logo" class="logo-img" />
                 <img v-else src="/vite.svg" alt="Logo" class="logo-img-mini" />
-                <span v-if="!isCollapsed" class="logo-text">Art Design Pro</span>
+                <span v-if="!themeStore.sidebarCollapsed" class="logo-text">Art Design Pro</span>
             </div>
 
-            <SidebarMenu :collapsed="isCollapsed" :data-theme="currentTheme" />
+            <SidebarMenu :collapsed="themeStore.sidebarCollapsed" :data-theme="appliedTheme" />
         </aside>
 
         <!-- 主内容区 -->
         <div class="layout-main">
             <!-- 顶部导航 -->
             <HeaderBar
-                :collapsed="isCollapsed"
+                :collapsed="themeStore.sidebarCollapsed"
                 :user-info="userInfo"
-                :data-theme="currentTheme"
+                :data-theme="appliedTheme"
                 @toggle-collapse="toggleCollapse"
                 @logout="handleLogout" />
 
             <!-- 标签页导航 -->
-            <TagsView :data-theme="currentTheme" />
+            <TagsView :data-theme="appliedTheme" />
 
             <!-- 页面内容 -->
-            <main class="layout-content" :data-theme="currentTheme">
+            <main class="layout-content" :data-theme="appliedTheme">
                 <div class="content-wrapper">
                     <router-view />
                 </div>
             </main>
         </div>
+
+        <!-- 设置面板 -->
+        <SettingsPanel />
     </div>
 </template>
 
