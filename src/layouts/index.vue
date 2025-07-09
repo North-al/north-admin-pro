@@ -62,6 +62,23 @@
     // 计算实际应用的主题
     const appliedTheme = computed(() => themeStore.computedTheme)
 
+    // 计算logo图片路径
+    const logoSrc = computed(() => {
+        // 根据主题选择logo - 深色主题和混色主题使用白色logo，浅色主题使用黑色logo
+        if (appliedTheme.value === 'dark' || appliedTheme.value === 'mixed') {
+            return new URL('../assets/logo-white.png', import.meta.url).href
+        } else {
+            return new URL('../assets/logo-black.png', import.meta.url).href
+        }
+    })
+
+    // logo点击事件
+    const handleLogoClick = () => {
+        if (router.currentRoute.value.path !== '/dashboard') {
+            router.push('/dashboard')
+        }
+    }
+
     // 计算侧边栏类名
     const sidebarClass = computed(() => {
         const classes = ['layout-sidebar']
@@ -76,9 +93,9 @@
     <div class="layout" :data-theme="appliedTheme">
         <!-- 侧边栏 -->
         <aside :class="sidebarClass" :style="{ width: sidebarWidth }" :data-theme="appliedTheme">
-            <div class="sidebar-logo" :data-theme="appliedTheme">
-                <img v-if="!themeStore.sidebarCollapsed" src="/vite.svg" alt="Logo" class="logo-img" />
-                <img v-else src="/vite.svg" alt="Logo" class="logo-img-mini" />
+            <div class="sidebar-logo" :data-theme="appliedTheme" @click="handleLogoClick">
+                <img v-if="!themeStore.sidebarCollapsed" :src="logoSrc" alt="North Admin Logo" class="logo-img" />
+                <img v-else :src="logoSrc" alt="North Admin Logo" class="logo-img-mini" />
                 <span v-if="!themeStore.sidebarCollapsed" class="logo-text">North Admin</span>
             </div>
 
