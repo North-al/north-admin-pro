@@ -8,9 +8,11 @@ export const dashboardRoutes: RouteRecordRaw[] = [
         meta: {
             title: '仪表板',
             icon: 'dashboard',
-            affix: true,
+            affix: true, // 固定标签页
             breadcrumb: false,
-            sort: 1
+            sort: 1,
+            keepAlive: true,
+            badge: ''
         }
     },
     {
@@ -20,7 +22,9 @@ export const dashboardRoutes: RouteRecordRaw[] = [
         meta: {
             title: '工作台',
             icon: 'workplace',
-            sort: 2
+            sort: 2,
+            keepAlive: true,
+            badge: ''
         }
     }
 ]

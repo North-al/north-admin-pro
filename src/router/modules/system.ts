@@ -8,7 +8,9 @@ export const systemRoutes: RouteRecordRaw[] = [
         meta: {
             title: '系统管理',
             icon: 'Setting',
-            sort: 99
+            sort: 99,
+            alwaysShow: true, // 始终显示父菜单
+            keepAlive: false // 是否缓存
         },
         children: [
             {
@@ -17,7 +19,9 @@ export const systemRoutes: RouteRecordRaw[] = [
                 component: () => import('~/pages/system/user/index.vue'),
                 meta: {
                     title: '用户管理',
-                    icon: 'User'
+                    icon: 'User',
+                    keepAlive: true, // 开启页面缓存
+                    badge: '' // 徽章内容，为空则不显示
                 }
             },
             {
@@ -26,7 +30,9 @@ export const systemRoutes: RouteRecordRaw[] = [
                 component: () => import('~/pages/system/role/index.vue'),
                 meta: {
                     title: '角色管理',
-                    icon: 'Avatar'
+                    icon: 'Avatar',
+                    keepAlive: true,
+                    badge: ''
                 }
             },
             {
@@ -35,7 +41,9 @@ export const systemRoutes: RouteRecordRaw[] = [
                 component: () => import('~/pages/system/menu/index.vue'),
                 meta: {
                     title: '菜单管理',
-                    icon: 'Menu'
+                    icon: 'Menu',
+                    keepAlive: true,
+                    badge: 'New' // 显示徽章
                 }
             }
         ]

@@ -9,6 +9,7 @@
     defineOptions({ name: 'Layout' })
 
     const router = useRouter()
+    const route = useRoute()
     const themeStore = useThemeStore()
     const settingsStore = useSettingsStore()
 
@@ -20,6 +21,36 @@
 
     // 移动端菜单状态
     const mobileMenuOpen = ref(false)
+
+    // 缓存的组件名称列表
+    const cachedViews = ref<string[]>([])
+
+    // 监听路由变化，动态管理缓存
+    watch(
+        () => route.name,
+        newRouteName => {
+            if (newRouteName && route.meta?.keepAlive) {
+                const componentName = newRouteName as string
+                if (!cachedViews.value.includes(componentName)) {
+                    cachedViews.value.push(componentName)
+                }
+            }
+        },
+        { immediate: true }
+    )
+
+    // 从缓存中移除指定组件
+    const removeCachedView = (componentName: string) => {
+        const index = cachedViews.value.indexOf(componentName)
+        if (index > -1) {
+            cachedViews.value.splice(index, 1)
+        }
+    }
+
+    // 清空所有缓存
+    const clearAllCachedViews = () => {
+        cachedViews.value = []
+    }
 
     // 切换侧边栏折叠状态
     const toggleCollapse = () => {
@@ -48,6 +79,7 @@
 
             // 这里添加退出登录逻辑
             localStorage.removeItem('token')
+            clearAllCachedViews() // 清空缓存
             router.push('/login')
         } catch {
             // 用户取消
@@ -90,6 +122,12 @@
         }
         return classes.join(' ')
     })
+
+    // 暴露方法给子组件使用（如 TagsView）
+    defineExpose({
+        removeCachedView,
+        clearAllCachedViews
+    })
 </script>
 
 <template>
@@ -121,7 +159,13 @@
             <!-- 页面内容 -->
             <main class="layout-content" :data-theme="appliedTheme">
                 <div class="content-wrapper">
-                    <router-view />
+                    <router-view v-slot="{ Component, route: currentRoute }">
+                        <transition name="fade-transform" mode="out-in" appear>
+                            <keep-alive :include="cachedViews">
+                                <component :is="Component" :key="currentRoute.fullPath" />
+                            </keep-alive>
+                        </transition>
+                    </router-view>
                 </div>
             </main>
         </div>

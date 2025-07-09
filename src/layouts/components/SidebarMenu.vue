@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { useThemeStore } from '../../store/modules/theme'
     import { generateMenu } from '~/router/helper/menuHelper'
+    import MenuItem from './MenuItem.vue'
 
     interface Props {
         collapsed: boolean
@@ -23,37 +24,6 @@
     // 当前激活的菜单
     const activeMenu = computed(() => route.path)
 
-    // 图标组件映射
-    const getIconComponent = (iconName?: string) => {
-        if (!iconName) return 'Document' // 默认图标
-        const iconMap: Record<string, any> = {
-            Odometer: 'Odometer',
-            DataAnalysis: 'DataAnalysis',
-            Monitor: 'Monitor',
-            ShoppingCart: 'ShoppingCart',
-            Folder: 'Folder',
-            Document: 'Document',
-            Collection: 'Collection',
-            Edit: 'Edit',
-            Picture: 'Picture',
-            Files: 'Files',
-            Cpu: 'Cpu',
-            Setting: 'Setting',
-            User: 'User',
-            Avatar: 'Avatar',
-            Menu: 'Menu',
-            Checked: 'Checked',
-            Warning: 'Warning',
-            Tools: 'Tools',
-            QuestionFilled: 'QuestionFilled',
-            Notebook: 'Notebook',
-            // 从路由元信息动态添加
-            dashboard: 'Odometer',
-            workplace: 'Monitor'
-        }
-        return iconMap[iconName] || 'Document'
-    }
-
     // 处理菜单点击
     const handleMenuClick = (path: string) => {
         if (path !== route.path) {
@@ -74,40 +44,7 @@
             :collapse-transition="false"
             mode="vertical"
             class="sidebar-el-menu">
-            <template v-for="item in menuItems" :key="item.path">
-                <!-- 有子菜单的情况 -->
-                <el-sub-menu v-if="item.children && item.children.length > 0" :index="item.path" class="menu-sub-menu">
-                    <template #title>
-                        <el-icon class="menu-icon">
-                            <component :is="getIconComponent(item.icon)" />
-                        </el-icon>
-                        <span class="menu-title">{{ item.title }}</span>
-                    </template>
-
-                    <el-menu-item
-                        v-for="child in item.children"
-                        :key="child.path"
-                        :index="child.path"
-                        class="menu-sub-item"
-                        @click="handleMenuClick(child.path)">
-                        <el-icon class="menu-icon">
-                            <component :is="getIconComponent(child.icon)" />
-                        </el-icon>
-                        <span class="menu-title">{{ child.title }}</span>
-                    </el-menu-item>
-                </el-sub-menu>
-
-                <!-- 没有子菜单的情况 -->
-                <el-menu-item v-else :index="item.path" class="menu-item" @click="handleMenuClick(item.path)">
-                    <el-icon class="menu-icon">
-                        <component :is="getIconComponent(item.icon)" />
-                    </el-icon>
-                    <span class="menu-title">{{ item.title }}</span>
-                    <el-tag type="primary" v-if="item.meta?.badge" class="menu-badge" size="small">{{
-                        item.meta?.badge
-                    }}</el-tag>
-                </el-menu-item>
-            </template>
+            <MenuItem v-for="item in menuItems" :key="item.path" :item="item" @menu-click="handleMenuClick" />
         </el-menu>
     </div>
 </template>
@@ -137,6 +74,8 @@
                 transition: all 0.2s ease;
                 position: relative;
                 overflow: hidden;
+                display: flex;
+                align-items: center;
 
                 &:hover {
                     background-color: var(--sidebar-hover-bg);
@@ -166,12 +105,36 @@
                     width: 18px;
                     margin-right: 12px;
                     transition: all 0.2s ease;
+                    flex-shrink: 0;
                 }
 
                 .menu-title {
                     font-size: 14px;
                     font-weight: 500;
                     transition: all 0.2s ease;
+                    flex: 1;
+                    text-align: left;
+                }
+
+                .menu-badge {
+                    margin-left: auto;
+                    margin-right: 0;
+                    flex-shrink: 0;
+
+                    :deep(.el-badge__content) {
+                        background-color: var(--el-color-primary);
+                        border: none;
+                        font-size: 10px;
+                        height: 18px;
+                        line-height: 18px;
+                        padding: 0 6px;
+                        min-width: 18px;
+                        border-radius: 9px;
+                        font-weight: 600;
+                        color: #fff;
+                        position: static;
+                        transform: none;
+                    }
                 }
             }
 
@@ -184,6 +147,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    position: relative;
 
                     .menu-icon {
                         margin-right: 0;
@@ -196,9 +160,24 @@
 
                     .menu-badge {
                         position: absolute;
-                        top: 8px;
-                        right: 8px;
-                        transform: scale(0.8);
+                        top: 6px;
+                        right: 6px;
+                        margin: 0;
+
+                        :deep(.el-badge__content) {
+                            background-color: var(--el-color-danger);
+                            border: 2px solid var(--sidebar-bg-color);
+                            font-size: 9px;
+                            height: 16px;
+                            line-height: 12px;
+                            padding: 0 4px;
+                            min-width: 16px;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            color: #fff;
+                            transform: scale(0.9);
+                            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                        }
                     }
                 }
 
@@ -224,15 +203,39 @@
                         line-height: 40px;
                         margin: 4px 12px 4px 36px;
                         padding-left: 20px;
+                        display: flex;
+                        align-items: center;
 
                         .menu-icon {
                             font-size: 16px;
                             width: 16px;
                             margin-right: 8px;
+                            flex-shrink: 0;
                         }
 
                         .menu-title {
                             font-size: 13px;
+                            flex: 1;
+                        }
+
+                        .menu-badge {
+                            margin-left: auto;
+                            margin-right: 0;
+                            flex-shrink: 0;
+
+                            :deep(.el-badge__content) {
+                                background-color: var(--el-color-primary);
+                                border: none;
+                                font-size: 9px;
+                                height: 16px;
+                                line-height: 16px;
+                                padding: 0 5px;
+                                min-width: 16px;
+                                border-radius: 8px;
+                                font-weight: 600;
+                                color: #fff;
+                                transform: scale(0.85);
+                            }
                         }
                     }
                 }
@@ -251,6 +254,42 @@
                         line-height: 36px;
                         border-radius: 6px;
                         color: var(--sidebar-text-color);
+                        display: flex;
+                        align-items: center;
+                        padding-left: 12px;
+                        padding-right: 12px;
+
+                        .menu-icon {
+                            font-size: 14px;
+                            width: 14px;
+                            margin-right: 8px;
+                            flex-shrink: 0;
+                        }
+
+                        .menu-title {
+                            font-size: 13px;
+                            flex: 1;
+                        }
+
+                        .menu-badge {
+                            margin-left: auto;
+                            margin-right: 0;
+                            flex-shrink: 0;
+
+                            :deep(.el-badge__content) {
+                                background-color: var(--el-color-primary);
+                                border: none;
+                                font-size: 9px;
+                                height: 14px;
+                                line-height: 14px;
+                                padding: 0 4px;
+                                min-width: 14px;
+                                border-radius: 7px;
+                                font-weight: 600;
+                                color: #fff;
+                                transform: scale(0.9);
+                            }
+                        }
 
                         &:hover {
                             background-color: var(--sidebar-hover-bg);
@@ -262,19 +301,6 @@
                             color: var(--sidebar-text-active);
                         }
                     }
-                }
-            }
-
-            // 徽章样式
-            .menu-badge {
-                :deep(.el-badge__content) {
-                    background-color: var(--el-color-primary);
-                    border: 1px solid var(--sidebar-bg-color);
-                    font-size: 10px;
-                    height: 16px;
-                    line-height: 14px;
-                    padding: 0 4px;
-                    min-width: 16px;
                 }
             }
         }
@@ -294,29 +320,6 @@
 
             &:hover {
                 background: var(--app-text-placeholder);
-            }
-        }
-    }
-
-    // 确保弹出菜单的主题一致性 - 使用全局样式注入
-    .el-popper[data-popper-placement] {
-        .el-menu--popup {
-            .el-menu-item {
-                color: var(--sidebar-text-color) !important;
-                background: transparent !important;
-                margin: 2px 8px !important;
-                border-radius: 6px !important;
-                transition: all 0.2s ease !important;
-
-                &:hover {
-                    background-color: var(--sidebar-hover-bg) !important;
-                    color: var(--sidebar-text-active) !important;
-                }
-
-                &.is-active {
-                    color: var(--sidebar-text-active) !important;
-                    background-color: var(--sidebar-active-bg) !important;
-                }
             }
         }
     }

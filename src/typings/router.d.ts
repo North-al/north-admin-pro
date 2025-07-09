@@ -21,6 +21,10 @@ export interface RouteMetaCustom {
     affix?: boolean
     /** 标签页图标 */
     tabIcon?: string
+    /** 徽章内容 */
+    badge?: string
+    /** 是否始终显示父菜单（即使只有一个子菜单） */
+    alwaysShow?: boolean
 }
 
 export interface RouteConfig {
@@ -30,4 +34,9 @@ export interface RouteConfig {
     redirect?: string
     meta?: RouteMetaCustom
     children?: RouteConfig[]
+}
+
+// 扩展 Vue Router 的 RouteMeta 类型
+declare module 'vue-router' {
+    interface RouteMeta extends RouteMetaCustom {}
 }
