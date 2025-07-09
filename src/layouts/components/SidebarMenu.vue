@@ -106,6 +106,10 @@
                     margin-right: 12px;
                     transition: all 0.2s ease;
                     flex-shrink: 0;
+
+                    &:empty {
+                        display: none;
+                    }
                 }
 
                 .menu-title {
@@ -115,11 +119,12 @@
                     flex: 1;
                     text-align: left;
                 }
-
                 .menu-badge {
                     margin-left: auto;
-                    margin-right: 0;
+                    margin-right: 8px;
                     flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
 
                     :deep(.el-badge__content) {
                         background-color: var(--el-color-primary);
@@ -134,11 +139,12 @@
                         color: #fff;
                         position: static;
                         transform: none;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
-            }
-
-            // 折叠状态下的样式
+            } // 折叠状态下的样式
             &.el-menu--collapse {
                 :deep(.el-menu-item),
                 :deep(.el-sub-menu__title) {
@@ -158,26 +164,9 @@
                         display: none;
                     }
 
+                    // 折叠时隐藏第一级的徽记
                     .menu-badge {
-                        position: absolute;
-                        top: 6px;
-                        right: 6px;
-                        margin: 0;
-
-                        :deep(.el-badge__content) {
-                            background-color: var(--el-color-danger);
-                            border: 2px solid var(--sidebar-bg-color);
-                            font-size: 9px;
-                            height: 16px;
-                            line-height: 12px;
-                            padding: 0 4px;
-                            min-width: 16px;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            color: #fff;
-                            transform: scale(0.9);
-                            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-                        }
+                        display: none;
                     }
                 }
 
@@ -185,6 +174,19 @@
                 :deep(.el-sub-menu) {
                     .el-sub-menu__title {
                         justify-content: center;
+
+                        .menu-badge {
+                            display: none;
+                        }
+                    }
+
+                    // 弹出的子菜单仍然显示徽记
+                    .el-menu--popup {
+                        .el-menu-item {
+                            .menu-badge {
+                                display: flex;
+                            }
+                        }
                     }
                 }
             }
@@ -211,17 +213,22 @@
                             width: 16px;
                             margin-right: 8px;
                             flex-shrink: 0;
+
+                            &:empty {
+                                display: none;
+                            }
                         }
 
                         .menu-title {
                             font-size: 13px;
                             flex: 1;
                         }
-
                         .menu-badge {
                             margin-left: auto;
-                            margin-right: 0;
+                            margin-right: 8px;
                             flex-shrink: 0;
+                            display: flex;
+                            align-items: center;
 
                             :deep(.el-badge__content) {
                                 background-color: var(--el-color-primary);
@@ -234,7 +241,11 @@
                                 border-radius: 8px;
                                 font-weight: 600;
                                 color: #fff;
-                                transform: scale(0.85);
+                                transform: none;
+                                position: static;
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
                             }
                         }
                     }
@@ -264,17 +275,22 @@
                             width: 14px;
                             margin-right: 8px;
                             flex-shrink: 0;
+
+                            &:empty {
+                                display: none;
+                            }
                         }
 
                         .menu-title {
                             font-size: 13px;
                             flex: 1;
                         }
-
                         .menu-badge {
                             margin-left: auto;
-                            margin-right: 0;
+                            margin-right: 8px;
                             flex-shrink: 0;
+                            display: flex;
+                            align-items: center;
 
                             :deep(.el-badge__content) {
                                 background-color: var(--el-color-primary);
@@ -287,7 +303,11 @@
                                 border-radius: 7px;
                                 font-weight: 600;
                                 color: #fff;
-                                transform: scale(0.9);
+                                transform: none;
+                                position: static;
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
                             }
                         }
 
