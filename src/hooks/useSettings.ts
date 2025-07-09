@@ -1,5 +1,5 @@
-import { computed } from 'vue'
 import { useThemeStore } from '../store/modules/theme'
+import { useSettingsStore } from '../store/modules/settings'
 import { useTheme } from './useTheme'
 import { useFullscreen } from './useFullscreen'
 
@@ -9,47 +9,56 @@ import { useFullscreen } from './useFullscreen'
  */
 export function useSettings() {
     const themeStore = useThemeStore()
+    const settingsStore = useSettingsStore()
     const { setTheme, themeOptions } = useTheme()
     const { toggleFullscreen } = useFullscreen()
 
     // 侧边栏折叠状态
-    const sidebarCollapsed = computed(() => themeStore.sidebarCollapsed)
+    const sidebarCollapsed = computed(() => settingsStore.sidebarCollapsed)
 
     // 设置面板状态
-    const settingsPanelOpen = computed(() => themeStore.settingsPanelOpen)
+    const settingsPanelOpen = computed(() => settingsStore.settingsPanelOpen)
+
+    // 标签页开关状态
+    const tagsViewEnabled = computed(() => settingsStore.tagsViewEnabled)
 
     // 切换侧边栏
     const toggleSidebar = () => {
-        themeStore.toggleSidebar()
+        settingsStore.toggleSidebar()
     }
 
     // 打开设置面板
     const openSettingsPanel = () => {
-        themeStore.settingsPanelOpen = true
+        settingsStore.settingsPanelOpen = true
     }
 
     // 关闭设置面板
     const closeSettingsPanel = () => {
-        themeStore.settingsPanelOpen = false
+        settingsStore.settingsPanelOpen = false
     }
 
     // 切换设置面板
     const toggleSettingsPanel = () => {
-        themeStore.toggleSettingsPanel()
+        settingsStore.toggleSettingsPanel()
+    }
+
+    // 切换标签页开关
+    const toggleTagsView = () => {
+        settingsStore.toggleTagsView()
     }
 
     // 重置所有设置
     const resetSettings = () => {
         setTheme('auto')
-        themeStore.sidebarCollapsed = false
-        themeStore.settingsPanelOpen = false
+        settingsStore.resetSettings()
     }
 
     // 导出设置配置
     const exportSettings = () => {
         const settings = {
             theme: themeStore.currentTheme,
-            sidebarCollapsed: themeStore.sidebarCollapsed,
+            sidebarCollapsed: settingsStore.sidebarCollapsed,
+            tagsViewEnabled: settingsStore.tagsViewEnabled,
             timestamp: Date.now()
         }
 
@@ -79,7 +88,16 @@ export function useSettings() {
                         setTheme(settings.theme)
                     }
                     if (typeof settings.sidebarCollapsed === 'boolean') {
-                        themeStore.sidebarCollapsed = settings.sidebarCollapsed
+                        // 如果当前状态与目标状态不同，则切换
+                        if (settingsStore.sidebarCollapsed !== settings.sidebarCollapsed) {
+                            toggleSidebar()
+                        }
+                    }
+                    if (typeof settings.tagsViewEnabled === 'boolean') {
+                        // 如果当前状态与目标状态不同，则切换
+                        if (settingsStore.tagsViewEnabled !== settings.tagsViewEnabled) {
+                            toggleTagsView()
+                        }
                     }
 
                     resolve(true)
@@ -97,12 +115,14 @@ export function useSettings() {
         sidebarCollapsed,
         settingsPanelOpen,
         themeOptions,
+        tagsViewEnabled,
 
         // actions
         toggleSidebar,
         openSettingsPanel,
         closeSettingsPanel,
         toggleSettingsPanel,
+        toggleTagsView,
         toggleFullscreen,
         resetSettings,
         exportSettings,

@@ -49,7 +49,7 @@
                     <div class="setting-label">
                         <span>侧边栏折叠</span>
                     </div>
-                    <el-switch v-model="sidebarCollapsed" @change="toggleSidebar" />
+                    <el-switch v-model="sidebarCollapsed" />
                 </div>
 
                 <div class="setting-item">
@@ -62,6 +62,13 @@
                         @click="() => toggleFullscreen()">
                         {{ isFullscreen ? '退出全屏' : '进入全屏' }}
                     </el-button>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span>标签页开关</span>
+                    </div>
+                    <el-switch v-model="tagsViewEnabled" />
                 </div>
             </div>
 
@@ -90,9 +97,9 @@
 
     const {
         settingsPanelOpen,
-        sidebarCollapsed,
         themeOptions,
         toggleSidebar,
+        toggleTagsView,
         closeSettingsPanel,
         toggleFullscreen,
         resetSettings,
@@ -101,6 +108,27 @@
 
     const { currentTheme } = useTheme()
     const { isFullscreen } = useFullscreen()
+
+    // 创建可写的 computed 属性
+    const sidebarCollapsed = computed({
+        get: () => useSettings().sidebarCollapsed.value,
+        set: (value: boolean) => {
+            // 只有当目标状态与当前状态不同时才切换
+            if (useSettings().sidebarCollapsed.value !== value) {
+                toggleSidebar()
+            }
+        }
+    })
+
+    const tagsViewEnabled = computed({
+        get: () => useSettings().tagsViewEnabled.value,
+        set: (value: boolean) => {
+            // 只有当目标状态与当前状态不同时才切换
+            if (useSettings().tagsViewEnabled.value !== value) {
+                toggleTagsView()
+            }
+        }
+    })
 
     // 面板显示状态
     const visible = computed({

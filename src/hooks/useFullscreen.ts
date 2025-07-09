@@ -1,11 +1,11 @@
-import { useThemeStore } from '../store/modules/theme'
+import { useSettingsStore } from '../store/modules/settings'
 
 /**
  * 全屏管理Hook
  * 提供全屏切换、全屏状态检测等功能
  */
 export function useFullscreen() {
-    const themeStore = useThemeStore()
+    const settingsStore = useSettingsStore()
 
     // 是否支持全屏
     const isSupported = ref(false)
@@ -32,7 +32,7 @@ export function useFullscreen() {
             (document as any).msFullscreenElement
         )
         isFullscreen.value = newStatus
-        themeStore.setFullscreen(newStatus)
+        settingsStore.setFullscreen(newStatus)
     }
 
     // 进入全屏
@@ -100,7 +100,7 @@ export function useFullscreen() {
         }
     }
 
-    onMounted(() => {
+    const init = () => {
         checkSupport()
         updateFullscreenStatus()
 
@@ -110,21 +110,23 @@ export function useFullscreen() {
         document.addEventListener('mozfullscreenchange', handleFullscreenChange)
         document.addEventListener('MSFullscreenChange', handleFullscreenChange)
         document.addEventListener('keydown', handleKeydown)
-    })
+    }
 
-    onUnmounted(() => {
-        // 移除事件监听
+    const dispose = () => {
         document.removeEventListener('fullscreenchange', handleFullscreenChange)
         document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
         document.removeEventListener('mozfullscreenchange', handleFullscreenChange)
         document.removeEventListener('MSFullscreenChange', handleFullscreenChange)
         document.removeEventListener('keydown', handleKeydown)
-    })
+    }
 
     return {
         // state
         isSupported,
         isFullscreen,
+
+        init,
+        dispose,
 
         // actions
         enterFullscreen,

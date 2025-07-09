@@ -26,7 +26,7 @@
 
     // 使用hooks和store
     const { openSettingsPanel } = useSettings()
-    const { toggleFullscreen: toggleFullscreenMode, isFullscreen } = useFullscreen()
+    const { toggleFullscreen: toggleFullscreenMode } = useFullscreen()
     const themeStore = useThemeStore()
 
     // 获取当前主题

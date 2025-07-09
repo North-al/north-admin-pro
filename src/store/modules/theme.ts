@@ -18,15 +18,6 @@ export const useThemeStore = defineStore('theme', () => {
     // 实际应用的主题（计算后的结果）
     const actualTheme = ref<Exclude<ThemeType, 'auto'>>('dark')
 
-    // 侧边栏折叠状态
-    const sidebarCollapsed = ref(false)
-
-    // 设置面板状态
-    const settingsPanelOpen = ref(false)
-
-    // 全屏状态
-    const isFullscreen = ref(false)
-
     // 主题配置
     const themeConfigs: Record<ThemeType, ThemeConfig> = {
         auto: {
@@ -124,27 +115,9 @@ export const useThemeStore = defineStore('theme', () => {
         }
     }
 
-    // 切换侧边栏折叠状态
-    const toggleSidebar = () => {
-        sidebarCollapsed.value = !sidebarCollapsed.value
-        localStorage.setItem('sidebar-collapsed', String(sidebarCollapsed.value))
-    }
-    // 切换设置面板
-    const toggleSettingsPanel = () => {
-        settingsPanelOpen.value = !settingsPanelOpen.value
-    }
-
-    // 设置全屏状态
-    const setFullscreen = (value: boolean) => {
-        isFullscreen.value = value
-    }
-
     // 初始化主题
     const initTheme = () => {
         const savedTheme = (localStorage.getItem('app-theme') as ThemeType) || 'auto'
-        const savedSidebarState = localStorage.getItem('sidebar-collapsed') === 'true'
-
-        sidebarCollapsed.value = savedSidebarState
 
         // 设置主题并监听系统变化
         setTheme(savedTheme)
@@ -155,9 +128,6 @@ export const useThemeStore = defineStore('theme', () => {
         // state
         currentTheme,
         actualTheme,
-        sidebarCollapsed,
-        settingsPanelOpen,
-        isFullscreen,
         themeConfigs,
 
         // getters
@@ -166,9 +136,6 @@ export const useThemeStore = defineStore('theme', () => {
 
         // actions
         setTheme,
-        toggleSidebar,
-        toggleSettingsPanel,
-        setFullscreen,
         initTheme
     }
 })

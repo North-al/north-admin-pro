@@ -4,15 +4,18 @@
     import TagsView from './components/TagsView.vue'
     import SettingsPanel from '../components/SettingsPanel.vue'
     import { useThemeStore } from '../store/modules/theme'
+    import { useSettingsStore } from '../store/modules/settings'
 
     defineOptions({ name: 'Layout' })
 
     const router = useRouter()
     const themeStore = useThemeStore()
+    const settingsStore = useSettingsStore()
 
-    // 初始化主题
+    // 初始化主题和设置
     onMounted(() => {
         themeStore.initTheme()
+        settingsStore.initSettings()
     })
 
     // 移动端菜单状态
@@ -23,7 +26,7 @@
         if (window.innerWidth <= 768) {
             mobileMenuOpen.value = !mobileMenuOpen.value
         } else {
-            themeStore.toggleSidebar()
+            settingsStore.toggleSidebar()
         }
     }
 
@@ -56,7 +59,7 @@
         if (window.innerWidth <= 768) {
             return '250px'
         }
-        return themeStore.sidebarCollapsed ? '64px' : '250px'
+        return settingsStore.sidebarCollapsed ? '64px' : '250px'
     })
 
     // 计算实际应用的主题
@@ -94,26 +97,26 @@
         <!-- 侧边栏 -->
         <aside :class="sidebarClass" :style="{ width: sidebarWidth }" :data-theme="appliedTheme">
             <div class="sidebar-logo" :data-theme="appliedTheme" @click="handleLogoClick">
-                <img v-if="!themeStore.sidebarCollapsed" :src="logoSrc" alt="North Admin Logo" class="logo-img" />
+                <img v-if="!settingsStore.sidebarCollapsed" :src="logoSrc" alt="North Admin Logo" class="logo-img" />
                 <img v-else :src="logoSrc" alt="North Admin Logo" class="logo-img-mini" />
-                <span v-if="!themeStore.sidebarCollapsed" class="logo-text">North Admin</span>
+                <span v-if="!settingsStore.sidebarCollapsed" class="logo-text">North Admin</span>
             </div>
 
-            <SidebarMenu :collapsed="themeStore.sidebarCollapsed" :data-theme="appliedTheme" />
+            <SidebarMenu :collapsed="settingsStore.sidebarCollapsed" :data-theme="appliedTheme" />
         </aside>
 
         <!-- 主内容区 -->
         <div class="layout-main">
             <!-- 顶部导航 -->
             <HeaderBar
-                :collapsed="themeStore.sidebarCollapsed"
+                :collapsed="settingsStore.sidebarCollapsed"
                 :user-info="userInfo"
                 :data-theme="appliedTheme"
                 @toggle-collapse="toggleCollapse"
                 @logout="handleLogout" />
 
             <!-- 标签页导航 -->
-            <TagsView :data-theme="appliedTheme" />
+            <TagsView v-if="settingsStore.tagsViewEnabled" :data-theme="appliedTheme" />
 
             <!-- 页面内容 -->
             <main class="layout-content" :data-theme="appliedTheme">
