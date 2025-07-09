@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import type { App } from 'vue'
 import { dashboardRoutes } from './modules/dashboard'
+import { systemRoutes } from './modules/system'
+import { staticRoutes } from './staticRoutes'
 
 // 基础路由 - 不需要权限验证的路由
 const baseRoutes: RouteRecordRaw[] = [
@@ -9,21 +11,9 @@ const baseRoutes: RouteRecordRaw[] = [
         name: 'Layout',
         component: () => import('~/layouts/index.vue'),
         redirect: '/dashboard',
-        children: [...dashboardRoutes]
+        children: [...dashboardRoutes, ...systemRoutes]
     },
-    {
-        path: '/404',
-        name: 'Error404',
-        component: () => import('~/pages/error/404.vue'),
-        meta: {
-            title: '404',
-            hidden: true
-        }
-    },
-    {
-        path: '/:pathMatch(.*)*',
-        redirect: '/404'
-    }
+    ...staticRoutes
 ]
 
 const router = createRouter({

@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { useThemeStore } from '../../store/modules/theme'
+    import { generateMenu } from '~/router/helper/menuHelper'
 
     interface Props {
         collapsed: boolean
@@ -13,130 +14,18 @@
     // 获取当前主题
     const currentTheme = computed(() => themeStore.computedTheme)
 
-    // 菜单数据 - 这里可以从路由配置或API获取
-    const menuItems = ref([
-        {
-            path: '/dashboard',
-            title: '仪表板',
-            icon: 'Odometer',
-            children: [
-                {
-                    path: '/dashboard',
-                    title: '分析页',
-                    icon: 'DataAnalysis'
-                },
-                {
-                    path: '/workplace',
-                    title: '工作台',
-                    icon: 'Monitor'
-                },
-                {
-                    path: '/e-commerce',
-                    title: '电子商务',
-                    icon: 'ShoppingCart'
-                }
-            ]
-        },
-        {
-            path: '/model-center',
-            title: '模板中心',
-            icon: 'Folder',
-            children: [
-                {
-                    path: '/model/list',
-                    title: '模板列表',
-                    icon: 'Document'
-                },
-                {
-                    path: '/model/category',
-                    title: '分类管理',
-                    icon: 'Collection'
-                }
-            ]
-        },
-        {
-            path: '/design-center',
-            title: '设计中心',
-            icon: 'Edit',
-            children: [
-                {
-                    path: '/design/canvas',
-                    title: '画布设计',
-                    icon: 'Picture'
-                },
-                {
-                    path: '/design/assets',
-                    title: '素材库',
-                    icon: 'Files'
-                }
-            ]
-        },
-        {
-            path: '/function-demo',
-            title: '功能示例',
-            icon: 'Cpu'
-        },
-        {
-            path: '/system',
-            title: '系统管理',
-            icon: 'Setting',
-            children: [
-                {
-                    path: '/system/user',
-                    title: '用户管理',
-                    icon: 'User'
-                },
-                {
-                    path: '/system/role',
-                    title: '角色管理',
-                    icon: 'Avatar'
-                },
-                {
-                    path: '/system/menu',
-                    title: '菜单管理',
-                    icon: 'MenuIcon'
-                }
-            ]
-        },
-        {
-            path: '/document-manage',
-            title: '文章管理',
-            icon: 'Document'
-        },
-        {
-            path: '/result-page',
-            title: '结果页面',
-            icon: 'Checked'
-        },
-        {
-            path: '/exception-page',
-            title: '异常页面',
-            icon: 'Warning'
-        },
-        {
-            path: '/operation-manage',
-            title: '运维管理',
-            icon: 'Tools'
-        },
-        {
-            path: '/help-center',
-            title: '帮助中心',
-            icon: 'QuestionFilled',
-            badge: 'v2.6.1'
-        },
-        {
-            path: '/update-log',
-            title: '更新日志',
-            icon: 'Notebook',
-            badge: 'v2.6.1'
-        }
-    ])
+    // 从路由生成菜单
+    const menuItems = computed(() => {
+        const layoutRoute = router.options.routes.find(r => r.name === 'Layout')
+        return layoutRoute ? generateMenu(layoutRoute.children || []) : []
+    })
 
     // 当前激活的菜单
     const activeMenu = computed(() => route.path)
 
     // 图标组件映射
-    const getIconComponent = (iconName: string) => {
+    const getIconComponent = (iconName?: string) => {
+        if (!iconName) return 'Document' // 默认图标
         const iconMap: Record<string, any> = {
             Odometer: 'Odometer',
             DataAnalysis: 'DataAnalysis',
@@ -152,14 +41,17 @@
             Setting: 'Setting',
             User: 'User',
             Avatar: 'Avatar',
-            MenuIcon: 'MenuIcon',
+            Menu: 'Menu',
             Checked: 'Checked',
             Warning: 'Warning',
             Tools: 'Tools',
             QuestionFilled: 'QuestionFilled',
-            Notebook: 'Notebook'
+            Notebook: 'Notebook',
+            // 从路由元信息动态添加
+            dashboard: 'Odometer',
+            workplace: 'Monitor'
         }
-        return iconMap[iconName] || Document
+        return iconMap[iconName] || 'Document'
     }
 
     // 处理菜单点击
@@ -211,7 +103,9 @@
                         <component :is="getIconComponent(item.icon)" />
                     </el-icon>
                     <span class="menu-title">{{ item.title }}</span>
-                    <el-tag type="primary" v-if="item.badge" class="menu-badge" size="small">{{ item.badge }}</el-tag>
+                    <el-tag type="primary" v-if="item.meta?.badge" class="menu-badge" size="small">{{
+                        item.meta?.badge
+                    }}</el-tag>
                 </el-menu-item>
             </template>
         </el-menu>
