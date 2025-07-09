@@ -137,7 +137,7 @@
             <!-- 用户信息下拉菜单 -->
             <el-dropdown class="user-dropdown" @command="handleCommand">
                 <div class="user-info">
-                    <el-avatar :src="userInfo.avatar" :size="32" class="user-avatar" />
+                    <el-avatar :src="userInfo.avatar" :size="24" class="user-avatar" />
                     <span class="user-name">{{ userInfo.name }}</span>
                     <el-icon class="dropdown-icon">
                         <ArrowDown />

@@ -2,7 +2,7 @@
 
 <template>
     <div>
-        <el-card>pages</el-card>
+        <el-card shadow="never">pages</el-card>
     </div>
 </template>
 
