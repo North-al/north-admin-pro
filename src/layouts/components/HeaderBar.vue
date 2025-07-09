@@ -178,9 +178,9 @@
         color: var(--header-text-color);
         transition: all 0.3s ease;
 
-        .collapse-btn,
         .action-btn {
             color: var(--header-text-color);
+            padding: 8px;
             // border-radius: 6px;
             // transition: all 0.2s ease;
 

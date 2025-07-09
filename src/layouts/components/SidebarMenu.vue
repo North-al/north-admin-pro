@@ -121,7 +121,8 @@
         {
             path: '/help-center',
             title: '帮助中心',
-            icon: 'QuestionFilled'
+            icon: 'QuestionFilled',
+            badge: 'v2.6.1'
         },
         {
             path: '/update-log',
@@ -210,7 +211,7 @@
                         <component :is="getIconComponent(item.icon)" />
                     </el-icon>
                     <span class="menu-title">{{ item.title }}</span>
-                    <el-badge v-if="item.badge" :value="item.badge" class="menu-badge" />
+                    <el-tag type="primary" v-if="item.badge" class="menu-badge" size="small">{{ item.badge }}</el-tag>
                 </el-menu-item>
             </template>
         </el-menu>
@@ -404,13 +405,8 @@
     }
 
     // 确保弹出菜单的主题一致性 - 使用全局样式注入
-    :global(.el-popper[data-popper-placement]) {
+    .el-popper[data-popper-placement] {
         .el-menu--popup {
-            background: var(--sidebar-bg-color) !important;
-            border: 1px solid var(--sidebar-border-color) !important;
-            box-shadow: 0 4px 20px var(--app-shadow-color) !important;
-            border-radius: 8px !important;
-
             .el-menu-item {
                 color: var(--sidebar-text-color) !important;
                 background: transparent !important;
@@ -425,7 +421,7 @@
 
                 &.is-active {
                     color: var(--sidebar-text-active) !important;
-                    font-weight: 600 !important;
+                    background-color: var(--sidebar-active-bg) !important;
                 }
             }
         }
