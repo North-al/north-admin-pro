@@ -37,10 +37,7 @@
         <el-menu
             :default-active="activeMenu"
             :collapse="collapsed"
-            :unique-opened="true"
             background-color="transparent"
-            :text-color="undefined"
-            :active-text-color="undefined"
             :collapse-transition="false"
             mode="vertical"
             class="sidebar-el-menu">

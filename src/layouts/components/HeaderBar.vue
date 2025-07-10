@@ -226,11 +226,5 @@
                 color: var(--app-text-secondary);
             }
         }
-
-        .notification-badge {
-            :deep(.el-badge__content) {
-                border: 2px solid var(--header-bg-color);
-            }
-        }
     }
 </style>
