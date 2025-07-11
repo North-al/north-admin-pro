@@ -133,14 +133,14 @@
 <template>
     <div class="layout" :data-theme="appliedTheme">
         <!-- 侧边栏 -->
-        <aside :class="sidebarClass" :style="{ width: sidebarWidth }" :data-theme="appliedTheme">
-            <div class="sidebar-logo" :data-theme="appliedTheme" @click="handleLogoClick">
+        <aside :class="sidebarClass" :style="{ width: sidebarWidth }">
+            <div class="sidebar-logo" @click="handleLogoClick">
                 <img v-if="!settingsStore.sidebarCollapsed" :src="logoSrc" alt="North Admin Logo" class="logo-img" />
                 <img v-else :src="logoSrc" alt="North Admin Logo" class="logo-img-mini" />
                 <span v-if="!settingsStore.sidebarCollapsed" class="logo-text">North Admin</span>
             </div>
 
-            <SidebarMenu :collapsed="settingsStore.sidebarCollapsed" :data-theme="appliedTheme" />
+            <SidebarMenu :collapsed="settingsStore.sidebarCollapsed" />
         </aside>
 
         <!-- 主内容区 -->
@@ -149,15 +149,14 @@
             <HeaderBar
                 :collapsed="settingsStore.sidebarCollapsed"
                 :user-info="userInfo"
-                :data-theme="appliedTheme"
                 @toggle-collapse="toggleCollapse"
                 @logout="handleLogout" />
 
             <!-- 标签页导航 -->
-            <TagsView v-if="settingsStore.tagsViewEnabled" :data-theme="appliedTheme" />
+            <TagsView v-if="settingsStore.tagsViewEnabled" />
 
             <!-- 页面内容 -->
-            <main class="layout-content" :data-theme="appliedTheme">
+            <main class="layout-content">
                 <div class="content-wrapper">
                     <router-view v-slot="{ Component, route: currentRoute }">
                         <transition name="fade-transform" mode="out-in" appear>

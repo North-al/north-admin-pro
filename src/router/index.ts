@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import type { App } from 'vue'
 import { staticRoutes } from './staticRoutes'
+import { titleGuard } from './guard/titleGuard'
 
 // 自动导入所有路由模块
 const modules = import.meta.glob('./modules/*.ts', { eager: true })
@@ -41,16 +42,7 @@ const router = createRouter({
 })
 
 // 全局后置守卫
-router.afterEach(to => {
-    // 设置页面标题
-    document.title = to.meta?.title ? `${to.meta.title} - 后台管理系统` : '后台管理系统'
-
-    // 页面加载完成后的逻辑
-    const loadingInstance = (window as any).loading
-    if (loadingInstance) {
-        loadingInstance.close()
-    }
-})
+router.afterEach(titleGuard)
 
 export const setupRouter = (app: App) => {
     app.use(router)

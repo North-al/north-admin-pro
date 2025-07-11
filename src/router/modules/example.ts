@@ -29,7 +29,7 @@ export const exampleRoutes: RouteRecordRaw[] = [
                     {
                         path: 'level2',
                         name: 'ExampleLevel2',
-                        component: () => import('~/pages/dashboard/index.vue'), // 临时使用已存在的页面
+                        component: () => import('~/pages/example/level2.vue'),
                         meta: {
                             title: '三级菜单页面',
                             icon: 'Edit',

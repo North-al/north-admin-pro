@@ -9,7 +9,6 @@ export const dashboardRoutes: RouteRecordRaw[] = [
             title: '仪表板',
             icon: 'Odometer',
             affix: true, // 固定标签页
-            breadcrumb: false,
             sort: 1,
             keepAlive: true,
             badge: ''

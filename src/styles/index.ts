@@ -2,6 +2,7 @@ export const setupStyles = () => {
     // 导入全局样式重置和布局样式
     import('./reset.scss')
     import('./app.scss')
+    import('./layout.scss')
 
     // 导入 Element Plus 组件样式自定义
     import('./element-plus.scss')

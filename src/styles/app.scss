@@ -133,21 +133,8 @@ button {
         -webkit-text-fill-color: transparent;
     }
 
-    // 针对浅色主题的特殊处理
-    [data-theme='light'] & {
-        background: linear-gradient(135deg, #1d2129, #165dff);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    // 针对混合主题的特殊处理
-    [data-theme='mixed'] & {
-        background: linear-gradient(135deg, #ffffff, #58a6ff);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+    // 使用CSS变量统一管理主题色彩
+    color: var(--app-text-color);
 }
 
 .layout-main {

@@ -1,8 +1,9 @@
 <script setup lang="ts">
     import ThemeToggle from '~/components/ThemeToggle.vue'
+    import Breadcrumb from '~/components/Breadcrumb.vue'
     import { useSettings } from '../../hooks/useSettings'
     import { useFullscreen } from '../../hooks/useFullscreen'
-    import { useThemeStore } from '../../store/modules/theme'
+    import { generateBreadcrumbs } from '~/utils/breadcrumb'
 
     interface UserInfo {
         name: string
@@ -27,30 +28,10 @@
     // 使用hooks和store
     const { openSettingsPanel } = useSettings()
     const { toggleFullscreen: toggleFullscreenMode } = useFullscreen()
-    const themeStore = useThemeStore()
-
-    // 获取当前主题
-    const currentTheme = computed(() => themeStore.computedTheme)
 
     // 面包屑数据
     const breadcrumbs = computed(() => {
-        const crumbs = [{ title: '首页', path: '/dashboard' }]
-
-        if (route.path !== '/dashboard') {
-            // 根据路径生成面包屑
-            if (route.meta?.title) {
-                crumbs.push({ title: route.meta.title as string, path: route.path })
-            } else {
-                // 根据路径生成标题
-                const pathSegments = route.path.split('/').filter(Boolean)
-                if (pathSegments.length > 0) {
-                    const title = pathSegments[pathSegments.length - 1]
-                    crumbs.push({ title: title === 'workplace' ? '工作台' : title, path: route.path })
-                }
-            }
-        }
-
-        return crumbs
+        return generateBreadcrumbs(route)
     })
 
     // 模拟通知数据
@@ -94,17 +75,13 @@
 </script>
 
 <template>
-    <header class="header-bar" :data-theme="currentTheme">
+    <header class="header-bar">
         <div class="header-left">
             <!-- 菜单折叠按钮 -->
             <el-button :icon="collapsed ? 'Expand' : 'Fold'" circle @click="handleToggleCollapse" />
 
             <!-- 面包屑导航 -->
-            <el-breadcrumb separator="/" class="breadcrumb">
-                <el-breadcrumb-item v-for="item in breadcrumbs" :key="item.path" :to="item.path">
-                    {{ item.title }}
-                </el-breadcrumb-item>
-            </el-breadcrumb>
+            <Breadcrumb :items="breadcrumbs" />
         </div>
 
         <div class="header-right">

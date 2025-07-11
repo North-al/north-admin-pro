@@ -1,0 +1,66 @@
+/* 布局组件统一样式 */
+
+/* 侧边栏 */
+.layout-sidebar {
+    background: var(--sidebar-bg-color);
+    border-right: 1px solid var(--sidebar-border-color);
+    transition: all 0.3s ease;
+}
+
+/* 顶部导航 */
+.layout-header,
+.header-bar {
+    background: var(--header-bg-color);
+    border-bottom: 1px solid var(--header-border-color);
+    box-shadow: var(--header-shadow);
+    color: var(--header-text-color);
+}
+
+/* 标签页 */
+.layout-tags,
+.tags-view {
+    background: var(--tags-bg-color);
+    border-bottom: 1px solid var(--tags-border-color);
+}
+
+/* 内容区域 */
+.layout-content {
+    background: var(--content-bg-color);
+    color: var(--content-text-color);
+}
+
+/* 菜单样式 */
+.sidebar-menu .el-menu {
+    background-color: transparent;
+    border-right: none;
+}
+
+.sidebar-menu .el-menu-item,
+.sidebar-menu .el-sub-menu__title {
+    color: var(--sidebar-text-color);
+    background-color: transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: var(--sidebar-hover-bg);
+        color: var(--sidebar-text-active);
+    }
+
+    &.is-active {
+        background-color: var(--sidebar-active-bg);
+        color: var(--sidebar-text-active);
+    }
+}
+
+.sidebar-menu .el-sub-menu .el-menu {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 深色主题下的子菜单背景调整 */
+[data-theme='dark'] .sidebar-menu .el-sub-menu .el-menu {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='mixed'] .sidebar-menu .el-sub-menu .el-menu {
+    background-color: rgba(0, 0, 0, 0.1);
+}

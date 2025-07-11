@@ -1,5 +1,4 @@
 <script setup lang="ts">
-    import { useThemeStore } from '../../store/modules/theme'
     import { generateMenu } from '~/router/helper/menuHelper'
     import MenuItem from './MenuItem.vue'
 
@@ -10,10 +9,6 @@
     defineProps<Props>()
     const router = useRouter()
     const route = useRoute()
-    const themeStore = useThemeStore()
-
-    // 获取当前主题
-    const currentTheme = computed(() => themeStore.computedTheme)
 
     // 从路由生成菜单
     const menuItems = computed(() => {
@@ -33,7 +28,7 @@
 </script>
 
 <template>
-    <div class="sidebar-menu" :data-theme="currentTheme">
+    <div class="sidebar-menu">
         <el-menu
             :default-active="activeMenu"
             :collapse="collapsed"

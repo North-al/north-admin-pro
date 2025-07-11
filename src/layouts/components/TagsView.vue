@@ -1,5 +1,4 @@
 <script setup lang="ts">
-    import { useThemeStore } from '../../store/modules/theme'
     import { useSettingsStore } from '../../store/modules/settings'
     import ContextMenu, { type ContextMenuItem } from '../../components/ContextMenu.vue'
 
@@ -13,11 +12,7 @@
 
     const route = useRoute()
     const router = useRouter()
-    const themeStore = useThemeStore()
     const settingsStore = useSettingsStore()
-
-    // 获取当前主题
-    const currentTheme = computed(() => themeStore.computedTheme)
 
     // 标签页是否启用
     const tagsViewEnabled = computed(() => settingsStore.tagsViewEnabled)
@@ -27,7 +22,7 @@
         {
             name: 'Dashboard',
             path: '/dashboard',
-            title: '首页',
+            title: '工作台',
             closable: false,
             fixed: true
         }
@@ -43,6 +38,11 @@
     const showScrollButtons = ref(false)
     const canScrollLeft = ref(false)
     const canScrollRight = ref(false)
+
+    // 响应式状态
+    const containerWidth = ref(0)
+    const isSmallScreen = computed(() => containerWidth.value < 768)
+    const isVerySmallScreen = computed(() => containerWidth.value < 480)
 
     // 右键菜单相关
     const contextMenuVisible = ref(false)
@@ -62,7 +62,7 @@
             {
                 key: 'fixed',
                 label: contextMenuTag.value.fixed ? '取消固定' : '固定标签',
-                icon: 'MoreFilled',
+                icon: 'Lock',
                 disabled: !contextMenuTag.value.closable,
                 divided: true
             },
@@ -205,7 +205,11 @@
         const container = tagsContainerRef.value
         const { scrollLeft, scrollWidth, clientWidth } = container
 
-        showScrollButtons.value = scrollWidth > clientWidth
+        // 更新容器宽度
+        containerWidth.value = clientWidth
+
+        // 小屏幕时不显示滚动按钮，直接允许滚动
+        showScrollButtons.value = scrollWidth > clientWidth && !isVerySmallScreen.value
         canScrollLeft.value = scrollLeft > 0
         canScrollRight.value = scrollLeft < scrollWidth - clientWidth
     }
@@ -342,7 +346,7 @@
 </script>
 
 <template>
-    <div v-if="tagsViewEnabled" class="tags-view" :data-theme="currentTheme">
+    <div v-if="tagsViewEnabled" class="tags-view">
         <!-- 滚动控制按钮 -->
         <div v-if="showScrollButtons" class="scroll-buttons">
             <el-button :disabled="!canScrollLeft" class="scroll-button scroll-left" size="small" @click="scrollToLeft">
@@ -371,12 +375,19 @@
                 @click="handleTagClick(tag)"
                 @contextmenu="handleContextMenu($event, tag)">
                 <!-- 固定标签图标 -->
-                <el-icon v-if="tag.fixed && !tag.closable" class="fixed-icon">
-                    <MoreFilled />
+                <el-icon v-if="tag.fixed && tag.path !== '/dashboard'" class="fixed-icon">
+                    <Lock />
+                </el-icon>
+
+                <!-- 首页图标 -->
+                <el-icon v-if="tag.path === '/dashboard'" class="home-icon">
+                    <House />
                 </el-icon>
 
                 <!-- 标签标题 -->
-                <span class="tag-title">{{ tag.title }}</span>
+                <span class="tag-title" :class="{ 'has-icon': tag.fixed || tag.path === '/dashboard' }">{{
+                    tag.title
+                }}</span>
 
                 <!-- 关闭按钮 -->
                 <el-icon v-if="tag.closable" class="close-icon" @click.stop="removeTag(tag.path)">
@@ -416,28 +427,26 @@
             background: var(--tags-bg-color);
             border-left: 1px solid var(--tags-border-color);
             z-index: 10;
-            padding: 0 8px;
+            padding: 0 6px;
 
             .scroll-button {
-                width: 26px;
-                height: 26px;
-                margin: 0 2px;
-                border: none;
+                width: 24px;
+                height: 24px;
+                margin: 0 1px;
+                border: 1px solid var(--tags-border-color);
                 background: var(--tags-item-bg);
                 color: var(--app-text-color);
-                transition: all 0.2s ease;
-                border-radius: 6px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                transition: all 0.3s ease;
+                border-radius: 4px;
 
                 &:hover:not(:disabled) {
                     background: var(--tags-item-hover-bg);
                     color: var(--el-color-primary);
+                    border-color: var(--el-color-primary-light-8);
                 }
 
                 &:disabled {
-                    opacity: 0.4;
+                    opacity: 0.3;
                     cursor: not-allowed;
                 }
             }
@@ -450,7 +459,6 @@
             overflow-y: hidden;
             display: flex;
             align-items: center;
-            padding: 0 12px;
             transition: all 0.3s ease;
 
             &.has-scroll {
@@ -466,41 +474,50 @@
                 position: relative;
                 display: flex;
                 align-items: center;
-                height: 30px;
-                padding: 0 12px;
-                margin-right: 8px;
+                height: 28px;
+                padding: 0 10px;
+                margin-right: 6px;
                 background: var(--tags-item-bg);
                 color: var(--app-text-color);
-                border: 1px solid transparent;
-                border-radius: 6px;
+                border: 1px solid var(--tags-border-color);
+                border-radius: 4px;
                 cursor: pointer;
                 user-select: none;
                 white-space: nowrap;
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: 400;
                 transition: all 0.2s ease;
-                min-width: 70px;
+                min-width: 60px;
 
                 &:hover {
                     background: var(--tags-item-hover-bg);
                     color: var(--el-color-primary);
                     border-color: var(--el-color-primary-light-8);
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
                 }
 
                 &.active {
                     background: var(--tags-item-active-bg);
                     color: var(--tags-item-active-color);
                     border-color: var(--el-color-primary);
-                    font-weight: 500;
+                    box-shadow: 0 2px 6px rgba(24, 144, 255, 0.15);
                 }
 
                 &.fixed {
                     .fixed-icon {
                         color: var(--el-color-warning);
-                        margin-right: 5px;
-                        font-size: 11px;
+                        margin-right: 4px;
+                        font-size: 12px;
                         opacity: 0.8;
                     }
+                }
+
+                // 首页标签样式
+                .home-icon {
+                    color: var(--el-color-primary);
+                    margin-right: 4px;
+                    font-size: 12px;
+                    opacity: 0.9;
                 }
 
                 .tag-title {
@@ -509,33 +526,38 @@
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     max-width: 120px;
-                    font-weight: inherit;
+                    font-weight: 400;
+
+                    &.has-icon {
+                        max-width: 100px;
+                    }
                 }
 
                 .close-icon {
                     margin-left: 6px;
                     padding: 3px;
-                    border-radius: 4px;
-                    font-size: 11px;
-                    opacity: 0.6;
+                    border-radius: 50%;
+                    font-size: 12px;
+                    opacity: 0.7;
                     transition: all 0.2s ease;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 16px;
-                    height: 16px;
+                    width: 18px;
+                    height: 18px;
 
                     &:hover {
                         opacity: 1;
-                        background: rgba(0, 0, 0, 0.1);
+                        background: rgba(255, 255, 255, 0.2);
                         color: var(--el-color-danger);
+                        transform: scale(1.1);
                     }
                 }
 
                 &:not(.closable) {
                     .tag-title {
-                        max-width: 140px;
+                        max-width: 120px;
                     }
                 }
 
@@ -543,7 +565,66 @@
                 &.active {
                     .close-icon:hover {
                         background: rgba(255, 255, 255, 0.2);
-                        color: #ffffff;
+                    }
+                }
+            }
+        }
+    }
+
+    // 响应式样式
+    @media (max-width: 768px) {
+        .tags-view {
+            .tags-container {
+                .tag-item {
+                    min-width: 50px;
+                    padding: 0 8px;
+
+                    .tag-title {
+                        max-width: 80px;
+
+                        &.has-icon {
+                            max-width: 60px;
+                        }
+                    }
+
+                    .close-icon {
+                        width: 16px;
+                        height: 16px;
+                        font-size: 10px;
+                        margin-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .tags-view {
+            .tags-container {
+                .tag-item {
+                    min-width: 40px;
+                    padding: 0 6px;
+
+                    .tag-title {
+                        max-width: 60px;
+                        font-size: 11px;
+
+                        &.has-icon {
+                            max-width: 40px;
+                        }
+                    }
+
+                    .home-icon,
+                    .fixed-icon {
+                        font-size: 10px;
+                        margin-right: 2px;
+                    }
+
+                    .close-icon {
+                        width: 14px;
+                        height: 14px;
+                        font-size: 9px;
+                        margin-left: 2px;
                     }
                 }
             }
