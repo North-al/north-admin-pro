@@ -17,7 +17,6 @@
     transition: width 0.3s ease;
     overflow: hidden;
     background: var(--sidebar-bg-color);
-    border-right: 1px solid var(--sidebar-border-color);
 }
 
 /* Logo 组件样式 */
@@ -189,7 +188,6 @@
     flex: 1;
     overflow: auto;
     background: var(--content-bg-color);
-    color: var(--content-text-color);
 }
 
 .content-wrapper {

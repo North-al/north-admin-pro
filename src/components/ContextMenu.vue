@@ -88,8 +88,8 @@
         z-index: 9999;
         background: var(--card-bg-color);
         border: 1px solid var(--card-border-color);
-        border-radius: 8px;
         box-shadow: var(--card-shadow);
+        border-radius: 8px;
         padding: 8px 0;
         min-width: 140px;
         backdrop-filter: blur(8px);

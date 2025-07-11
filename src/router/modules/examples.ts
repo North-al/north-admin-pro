@@ -127,6 +127,17 @@ export const examplesRoutes: RouteRecordRaw[] = [
                             keepAlive: true,
                             badge: ''
                         }
+                    },
+                    {
+                        path: 'css-vars',
+                        name: 'ExamplesHooksCssVars',
+                        component: () => import('~/pages/examples/hooks/css-vars.vue'),
+                        meta: {
+                            title: 'CSS变量管理Hook',
+                            icon: 'Brush',
+                            keepAlive: true,
+                            badge: 'New'
+                        }
                     }
                 ]
             }

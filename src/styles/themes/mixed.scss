@@ -6,16 +6,13 @@
     --app-text-secondary: #4e5969;
     --app-text-placeholder: #86909c;
     --app-border-color: #e5e6eb;
-    --app-shadow-color: rgba(0, 0, 0, 0.1);
 
     // 侧边栏主题（深色）
     --sidebar-bg-color: #232324;
     --sidebar-text-color: #e5e6eb;
-    --sidebar-text-secondary: #c9cdd4;
     --sidebar-text-active: #ffffff;
     --sidebar-hover-bg: rgba(255, 255, 255, 0.08);
     --sidebar-active-bg: #165dff;
-    --sidebar-border-color: #3c3c3f;
 
     // 顶部导航（浅色）
     --header-bg-color: #ffffff;
@@ -25,47 +22,17 @@
 
     // 内容区域（浅色）
     --content-bg-color: #fafbfc;
-    --content-text-color: #1d2129;
 
     // 标签页（浅色）
     --tags-bg-color: #ffffff;
     --tags-border-color: #e5e6eb;
     --tags-item-bg: #f7f8fa;
     --tags-item-active-bg: #165dff;
-    --tags-item-active-color: #ffffff;
-    --tags-item-hover-bg: #e8f3ff;
 
     // 卡片组件（浅色）
     --card-bg-color: #ffffff;
     --card-border-color: #e5e6eb;
     --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-
-    // 按钮组件（浅色）
-    --button-default-bg: #ffffff;
-    --button-default-border: #e5e6eb;
-    --button-default-color: #4e5969;
-    --button-primary-bg: #165dff;
-    --button-primary-border: #165dff;
-    --button-primary-color: #ffffff;
-
-    // 交互状态
-    --app-hover-bg: rgba(0, 0, 0, 0.05);
-    --app-hover-border: #c9cdd4;
-    --app-active-bg: rgba(0, 0, 0, 0.08);
-    --app-focus-border: #165dff;
-
-    // 输入框组件（浅色）
-    --input-bg-color: #ffffff;
-    --input-border-color: #e5e6eb;
-    --input-placeholder-color: #86909c;
-    --input-focus-border: #165dff;
-
-    // 表格组件（浅色）
-    --table-bg-color: #ffffff;
-    --table-border-color: #e5e6eb;
-    --table-header-bg: #f7f8fa;
-    --table-stripe-bg: #fafbfc;
-    --table-hover-bg: #f2f3f5;
 
     // 滚动条
     --scrollbar-track-bg: rgba(0, 0, 0, 0.04);
@@ -74,8 +41,4 @@
 
     // 设置面板（浅色）
     --settings-bg-color: #ffffff;
-    --settings-border-color: #e5e6eb;
-    --settings-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
 }
-
-// 样式已通过CSS变量自动应用

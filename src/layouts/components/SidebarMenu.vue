@@ -246,8 +246,6 @@
                 // 展开的子菜单弹出层样式
                 .el-menu--popup {
                     background: var(--sidebar-bg-color);
-                    border: 1px solid var(--sidebar-border-color);
-                    box-shadow: var(--app-shadow-color) 0 2px 12px;
                     border-radius: 8px;
                     padding: 4px 0;
 

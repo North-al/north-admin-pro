@@ -60,6 +60,24 @@
                 </div>
             </div>
 
+            <div class="hook-card" @click="navigateTo('/examples/hooks/css-vars')">
+                <div class="card-icon">
+                    <el-icon><Brush /></el-icon>
+                </div>
+                <div class="card-content">
+                    <h3>CSS变量管理Hook</h3>
+                    <p>动态修改CSS变量，可视化主题定制</p>
+                    <div class="card-tags">
+                        <span class="tag">CSS变量</span>
+                        <span class="tag">主题定制</span>
+                        <span class="tag">实时预览</span>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <el-icon><ArrowRight /></el-icon>
+                </div>
+            </div>
+
             <div class="hook-card disabled">
                 <div class="card-icon">
                     <el-icon><Monitor /></el-icon>

@@ -158,11 +158,8 @@
         .action-btn {
             color: var(--header-text-color);
             padding: 8px;
-            // border-radius: 6px;
-            // transition: all 0.2s ease;
 
             &:hover {
-                background-color: var(--app-hover-bg, rgba(0, 0, 0, 0.05));
                 color: var(--el-color-primary);
             }
         }
@@ -191,7 +188,7 @@
             transition: all 0.2s ease;
 
             &:hover {
-                background-color: var(--app-hover-bg, rgba(0, 0, 0, 0.05));
+                background-color: rgba(0, 0, 0, 0.05);
             }
 
             .user-name {

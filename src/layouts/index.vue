@@ -131,7 +131,7 @@
 </script>
 
 <template>
-    <div class="layout" :data-theme="appliedTheme">
+    <div class="layout">
         <!-- 侧边栏 -->
         <aside :class="sidebarClass" :style="{ width: sidebarWidth }">
             <div class="sidebar-logo" @click="handleLogoClick">
@@ -173,7 +173,3 @@
         <SettingsPanel />
     </div>
 </template>
-
-<style lang="scss" scoped>
-    /* 布局样式已移至全局样式文件 src/styles/app.scss */
-</style>
