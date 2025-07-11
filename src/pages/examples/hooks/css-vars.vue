@@ -154,16 +154,6 @@
                                         <small class="var-name">--app-border-color</small>
                                     </div>
                                 </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">阴影色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="appShadowColor" :predefine="predefineColors" />
-                                            <el-input v-model="appShadowColor" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--app-shadow-color</small>
-                                    </div>
-                                </div>
                             </div>
                         </el-collapse-item>
 
@@ -189,18 +179,7 @@
                                         <small class="var-name">--sidebar-text-color</small>
                                     </div>
                                 </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">次要文本色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker
-                                                v-model="sidebarTextSecondary"
-                                                :predefine="predefineColors" />
-                                            <el-input v-model="sidebarTextSecondary" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--sidebar-text-secondary</small>
-                                    </div>
-                                </div>
+
                                 <div class="var-item">
                                     <div class="var-info">
                                         <label class="var-label">激活文本色</label>
@@ -325,38 +304,6 @@
                                         <small class="var-name">--tags-item-bg</small>
                                     </div>
                                 </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">激活背景色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="tagsItemActiveBg" :predefine="predefineColors" />
-                                            <el-input v-model="tagsItemActiveBg" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--tags-item-active-bg</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">激活文本色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker
-                                                v-model="tagsItemActiveColor"
-                                                :predefine="predefineColors" />
-                                            <el-input v-model="tagsItemActiveColor" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--tags-item-active-color</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">悬停背景色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="tagsItemHoverBg" :predefine="predefineColors" />
-                                            <el-input v-model="tagsItemHoverBg" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--tags-item-hover-bg</small>
-                                    </div>
-                                </div>
                             </div>
                         </el-collapse-item>
 
@@ -396,119 +343,66 @@
                             </div>
                         </el-collapse-item>
 
-                        <el-collapse-item title="按钮组件" name="button">
+                        <el-collapse-item title="滚动条" name="scrollbar">
                             <div class="vars-grid">
                                 <div class="var-item">
                                     <div class="var-info">
-                                        <label class="var-label">默认背景色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="buttonDefaultBg" :predefine="predefineColors" />
-                                            <el-input v-model="buttonDefaultBg" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--button-default-bg</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">默认边框色</label>
+                                        <label class="var-label">轨道背景色</label>
                                         <div class="var-controls">
                                             <el-color-picker
-                                                v-model="buttonDefaultBorder"
+                                                v-model="scrollbarTrackBg"
+                                                show-alpha
                                                 :predefine="predefineColors" />
-                                            <el-input v-model="buttonDefaultBorder" size="small" class="color-input" />
+                                            <el-input v-model="scrollbarTrackBg" size="small" class="color-input" />
                                         </div>
-                                        <small class="var-name">--button-default-border</small>
+                                        <small class="var-name">--scrollbar-track-bg</small>
                                     </div>
                                 </div>
                                 <div class="var-item">
                                     <div class="var-info">
-                                        <label class="var-label">默认文本色</label>
+                                        <label class="var-label">滑块背景色</label>
                                         <div class="var-controls">
                                             <el-color-picker
-                                                v-model="buttonDefaultColor"
+                                                v-model="scrollbarThumbBg"
+                                                show-alpha
                                                 :predefine="predefineColors" />
-                                            <el-input v-model="buttonDefaultColor" size="small" class="color-input" />
+                                            <el-input v-model="scrollbarThumbBg" size="small" class="color-input" />
                                         </div>
-                                        <small class="var-name">--button-default-color</small>
+                                        <small class="var-name">--scrollbar-thumb-bg</small>
                                     </div>
                                 </div>
                                 <div class="var-item">
                                     <div class="var-info">
-                                        <label class="var-label">主要背景色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="buttonPrimaryBg" :predefine="predefineColors" />
-                                            <el-input v-model="buttonPrimaryBg" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--button-primary-bg</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">主要边框色</label>
+                                        <label class="var-label">滑块悬停背景色</label>
                                         <div class="var-controls">
                                             <el-color-picker
-                                                v-model="buttonPrimaryBorder"
+                                                v-model="scrollbarThumbHoverBg"
+                                                show-alpha
                                                 :predefine="predefineColors" />
-                                            <el-input v-model="buttonPrimaryBorder" size="small" class="color-input" />
+                                            <el-input
+                                                v-model="scrollbarThumbHoverBg"
+                                                size="small"
+                                                class="color-input" />
                                         </div>
-                                        <small class="var-name">--button-primary-border</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">主要文本色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker
-                                                v-model="buttonPrimaryColor"
-                                                :predefine="predefineColors" />
-                                            <el-input v-model="buttonPrimaryColor" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--button-primary-color</small>
+                                        <small class="var-name">--scrollbar-thumb-hover-bg</small>
                                     </div>
                                 </div>
                             </div>
                         </el-collapse-item>
 
-                        <el-collapse-item title="交互状态" name="interaction">
+                        <el-collapse-item title="设置面板" name="settings">
                             <div class="vars-grid">
                                 <div class="var-item">
                                     <div class="var-info">
-                                        <label class="var-label">悬停背景色</label>
+                                        <label class="var-label">背景色</label>
                                         <div class="var-controls">
-                                            <el-color-picker v-model="appHoverBg" :predefine="predefineColors" />
-                                            <el-input v-model="appHoverBg" size="small" class="color-input" />
+                                            <el-color-picker
+                                                v-model="settingsBgColor"
+                                                show-alpha
+                                                :predefine="predefineColors" />
+                                            <el-input v-model="settingsBgColor" size="small" class="color-input" />
                                         </div>
-                                        <small class="var-name">--app-hover-bg</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">悬停边框色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="appHoverBorder" :predefine="predefineColors" />
-                                            <el-input v-model="appHoverBorder" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--app-hover-border</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">激活背景色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="appActiveBg" :predefine="predefineColors" />
-                                            <el-input v-model="appActiveBg" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--app-active-bg</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">焦点边框色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="appFocusBorder" :predefine="predefineColors" />
-                                            <el-input v-model="appFocusBorder" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--app-focus-border</small>
+                                        <small class="var-name">--settings-bg-color</small>
                                     </div>
                                 </div>
                             </div>
@@ -686,12 +580,10 @@ const currentTheme = useCurrentTheme()
     const appTextSecondary = useThemeCssVar('--app-text-secondary', '#4e5969')
     const appTextPlaceholder = useThemeCssVar('--app-text-placeholder', '#86909c')
     const appBorderColor = useThemeCssVar('--app-border-color', '#e5e6eb')
-    const appShadowColor = useThemeCssVar('--app-shadow-color', 'rgba(0, 0, 0, 0.1)')
 
     // 侧边栏主题
     const sidebarBgColor = useThemeCssVar('--sidebar-bg-color', '#ffffff')
     const sidebarTextColor = useThemeCssVar('--sidebar-text-color', '#1d2129')
-    const sidebarTextSecondary = useThemeCssVar('--sidebar-text-secondary', '#4e5969')
     const sidebarTextActive = useThemeCssVar('--sidebar-text-active', '#165dff')
     const sidebarHoverBg = useThemeCssVar('--sidebar-hover-bg', '#f2f3f5')
     const sidebarActiveBg = useThemeCssVar('--sidebar-active-bg', '#e8f3ff')
@@ -709,41 +601,11 @@ const currentTheme = useCurrentTheme()
     const tagsBgColor = useThemeCssVar('--tags-bg-color', '#ffffff')
     const tagsBorderColor = useThemeCssVar('--tags-border-color', '#e5e6eb')
     const tagsItemBg = useThemeCssVar('--tags-item-bg', '#f7f8fa')
-    const tagsItemActiveBg = useThemeCssVar('--tags-item-active-bg', '#165dff')
-    const tagsItemActiveColor = useThemeCssVar('--tags-item-active-color', '#ffffff')
-    const tagsItemHoverBg = useThemeCssVar('--tags-item-hover-bg', '#e8f3ff')
 
     // 卡片组件
     const cardBgColor = useThemeCssVar('--card-bg-color', '#ffffff')
     const cardBorderColorVar = useThemeCssVar('--card-border-color', '#e5e6eb')
     const cardShadow = useThemeCssVar('--card-shadow', '0 2px 8px rgba(0, 0, 0, 0.06)')
-
-    // 按钮组件
-    const buttonDefaultBg = useThemeCssVar('--button-default-bg', '#ffffff')
-    const buttonDefaultBorder = useThemeCssVar('--button-default-border', '#e5e6eb')
-    const buttonDefaultColor = useThemeCssVar('--button-default-color', '#4e5969')
-    const buttonPrimaryBg = useThemeCssVar('--button-primary-bg', '#165dff')
-    const buttonPrimaryBorder = useThemeCssVar('--button-primary-border', '#165dff')
-    const buttonPrimaryColor = useThemeCssVar('--button-primary-color', '#ffffff')
-
-    // 交互状态
-    const appHoverBg = useThemeCssVar('--app-hover-bg', 'rgba(0, 0, 0, 0.05)')
-    const appHoverBorder = useThemeCssVar('--app-hover-border', '#c9cdd4')
-    const appActiveBg = useThemeCssVar('--app-active-bg', 'rgba(0, 0, 0, 0.08)')
-    const appFocusBorder = useThemeCssVar('--app-focus-border', '#165dff')
-
-    // 输入框组件
-    const inputBgColor = useThemeCssVar('--input-bg-color', '#ffffff')
-    const inputBorderColor = useThemeCssVar('--input-border-color', '#e5e6eb')
-    const inputPlaceholderColor = useThemeCssVar('--input-placeholder-color', '#86909c')
-    const inputFocusBorder = useThemeCssVar('--input-focus-border', '#165dff')
-
-    // 表格组件
-    const tableBgColor = useThemeCssVar('--table-bg-color', '#ffffff')
-    const tableBorderColor = useThemeCssVar('--table-border-color', '#e5e6eb')
-    const tableHeaderBg = useThemeCssVar('--table-header-bg', '#f7f8fa')
-    const tableStripeBg = useThemeCssVar('--table-stripe-bg', '#fafbfc')
-    const tableHoverBg = useThemeCssVar('--table-hover-bg', '#f2f3f5')
 
     // 滚动条
     const scrollbarTrackBg = useThemeCssVar('--scrollbar-track-bg', 'rgba(0, 0, 0, 0.04)')
@@ -752,8 +614,6 @@ const currentTheme = useCurrentTheme()
 
     // 设置面板
     const settingsBgColor = useThemeCssVar('--settings-bg-color', '#ffffff')
-    const settingsBorderColor = useThemeCssVar('--settings-border-color', '#e5e6eb')
-    const settingsShadow = useThemeCssVar('--settings-shadow', '-2px 0 8px rgba(0, 0, 0, 0.1)')
 
     // 针对特定元素的 CSS 变量
     const demoElementBg = useCssVar('--demo-bg', demoElement, { initialValue: '#f0f0f0' })
@@ -762,16 +622,16 @@ const currentTheme = useCurrentTheme()
     // 计算总变量数量
     const totalVariablesCount = computed(() => {
         // Element Plus 颜色: 5个
-        // 全局基础色彩: 6个
-        // 侧边栏主题: 7个
+        // 全局基础色彩: 5个
+        // 侧边栏主题: 5个
         // 顶部导航: 4个
-        // 内容区域: 2个
-        // 标签页: 6个
+        // 内容区域: 1个
+        // 标签页: 4个
         // 卡片组件: 3个
-        // 按钮组件: 6个
-        // 交互状态: 4个
+        // 滚动条: 3个
+        // 设置面板: 1个
         // 自定义元素: 2个
-        return 5 + 6 + 7 + 4 + 2 + 6 + 3 + 6 + 4 + 2 // = 45个主要变量
+        return 5 + 5 + 5 + 4 + 1 + 4 + 3 + 3 + 1 + 2 // = 33个主要变量
     })
 
     // 预定义颜色
@@ -831,12 +691,10 @@ const currentTheme = useCurrentTheme()
         appTextSecondary.value = computedStyle.getPropertyValue('--app-text-secondary').trim() || '#4e5969'
         appTextPlaceholder.value = computedStyle.getPropertyValue('--app-text-placeholder').trim() || '#86909c'
         appBorderColor.value = computedStyle.getPropertyValue('--app-border-color').trim() || '#e5e6eb'
-        appShadowColor.value = computedStyle.getPropertyValue('--app-shadow-color').trim() || 'rgba(0, 0, 0, 0.1)'
 
         // 侧边栏主题
         sidebarBgColor.value = computedStyle.getPropertyValue('--sidebar-bg-color').trim() || '#ffffff'
         sidebarTextColor.value = computedStyle.getPropertyValue('--sidebar-text-color').trim() || '#1d2129'
-        sidebarTextSecondary.value = computedStyle.getPropertyValue('--sidebar-text-secondary').trim() || '#4e5969'
         sidebarTextActive.value = computedStyle.getPropertyValue('--sidebar-text-active').trim() || '#165dff'
         sidebarHoverBg.value = computedStyle.getPropertyValue('--sidebar-hover-bg').trim() || '#f2f3f5'
         sidebarActiveBg.value = computedStyle.getPropertyValue('--sidebar-active-bg').trim() || '#e8f3ff'
@@ -854,28 +712,20 @@ const currentTheme = useCurrentTheme()
         tagsBgColor.value = computedStyle.getPropertyValue('--tags-bg-color').trim() || '#ffffff'
         tagsBorderColor.value = computedStyle.getPropertyValue('--tags-border-color').trim() || '#e5e6eb'
         tagsItemBg.value = computedStyle.getPropertyValue('--tags-item-bg').trim() || '#f7f8fa'
-        tagsItemActiveBg.value = computedStyle.getPropertyValue('--tags-item-active-bg').trim() || '#165dff'
-        tagsItemActiveColor.value = computedStyle.getPropertyValue('--tags-item-active-color').trim() || '#ffffff'
-        tagsItemHoverBg.value = computedStyle.getPropertyValue('--tags-item-hover-bg').trim() || '#e8f3ff'
 
         // 卡片组件
         cardBgColor.value = computedStyle.getPropertyValue('--card-bg-color').trim() || '#ffffff'
         cardBorderColorVar.value = computedStyle.getPropertyValue('--card-border-color').trim() || '#e5e6eb'
         cardShadow.value = computedStyle.getPropertyValue('--card-shadow').trim() || '0 2px 8px rgba(0, 0, 0, 0.06)'
 
-        // 按钮组件
-        buttonDefaultBg.value = computedStyle.getPropertyValue('--button-default-bg').trim() || '#ffffff'
-        buttonDefaultBorder.value = computedStyle.getPropertyValue('--button-default-border').trim() || '#e5e6eb'
-        buttonDefaultColor.value = computedStyle.getPropertyValue('--button-default-color').trim() || '#4e5969'
-        buttonPrimaryBg.value = computedStyle.getPropertyValue('--button-primary-bg').trim() || '#165dff'
-        buttonPrimaryBorder.value = computedStyle.getPropertyValue('--button-primary-border').trim() || '#165dff'
-        buttonPrimaryColor.value = computedStyle.getPropertyValue('--button-primary-color').trim() || '#ffffff'
+        // 滚动条
+        scrollbarTrackBg.value = computedStyle.getPropertyValue('--scrollbar-track-bg').trim() || 'rgba(0, 0, 0, 0.04)'
+        scrollbarThumbBg.value = computedStyle.getPropertyValue('--scrollbar-thumb-bg').trim() || 'rgba(0, 0, 0, 0.15)'
+        scrollbarThumbHoverBg.value =
+            computedStyle.getPropertyValue('--scrollbar-thumb-hover-bg').trim() || 'rgba(0, 0, 0, 0.25)'
 
-        // 交互状态
-        appHoverBg.value = computedStyle.getPropertyValue('--app-hover-bg').trim() || 'rgba(0, 0, 0, 0.05)'
-        appHoverBorder.value = computedStyle.getPropertyValue('--app-hover-border').trim() || '#c9cdd4'
-        appActiveBg.value = computedStyle.getPropertyValue('--app-active-bg').trim() || 'rgba(0, 0, 0, 0.08)'
-        appFocusBorder.value = computedStyle.getPropertyValue('--app-focus-border').trim() || '#165dff'
+        // 设置面板
+        settingsBgColor.value = computedStyle.getPropertyValue('--settings-bg-color').trim() || '#ffffff'
 
         // 自定义元素变量
         demoElementBg.value = '#f0f0f0'
@@ -898,17 +748,14 @@ const currentTheme = useCurrentTheme()
                 'app-text-color': appTextColor.value,
                 'app-text-secondary': appTextSecondary.value,
                 'app-text-placeholder': appTextPlaceholder.value,
-                'app-border-color': appBorderColor.value,
-                'app-shadow-color': appShadowColor.value
+                'app-border-color': appBorderColor.value
             },
             sidebarTheme: {
                 'sidebar-bg-color': sidebarBgColor.value,
                 'sidebar-text-color': sidebarTextColor.value,
-                'sidebar-text-secondary': sidebarTextSecondary.value,
                 'sidebar-text-active': sidebarTextActive.value,
                 'sidebar-hover-bg': sidebarHoverBg.value,
-                'sidebar-active-bg': sidebarActiveBg.value,
-                'sidebar-border-color': sidebarBorderColor.value
+                'sidebar-active-bg': sidebarActiveBg.value
             },
             headerTheme: {
                 'header-bg-color': headerBgColor.value,
@@ -917,15 +764,12 @@ const currentTheme = useCurrentTheme()
                 'header-shadow': headerShadow.value
             },
             contentTheme: {
-                'content-bg-color': contentBgColor.value,
-                'content-text-color': contentTextColor.value
+                'content-bg-color': contentBgColor.value
             },
             tagsTheme: {
                 'tags-bg-color': tagsBgColor.value,
                 'tags-border-color': tagsBorderColor.value,
                 'tags-item-bg': tagsItemBg.value,
-                'tags-item-active-bg': tagsItemActiveBg.value,
-                'tags-item-active-color': tagsItemActiveColor.value,
                 'tags-item-hover-bg': tagsItemHoverBg.value
             },
             cardTheme: {
@@ -933,19 +777,13 @@ const currentTheme = useCurrentTheme()
                 'card-border-color': cardBorderColorVar.value,
                 'card-shadow': cardShadow.value
             },
-            buttonTheme: {
-                'button-default-bg': buttonDefaultBg.value,
-                'button-default-border': buttonDefaultBorder.value,
-                'button-default-color': buttonDefaultColor.value,
-                'button-primary-bg': buttonPrimaryBg.value,
-                'button-primary-border': buttonPrimaryBorder.value,
-                'button-primary-color': buttonPrimaryColor.value
+            scrollbarTheme: {
+                'scrollbar-track-bg': scrollbarTrackBg.value,
+                'scrollbar-thumb-bg': scrollbarThumbBg.value,
+                'scrollbar-thumb-hover-bg': scrollbarThumbHoverBg.value
             },
-            interactionTheme: {
-                'app-hover-bg': appHoverBg.value,
-                'app-hover-border': appHoverBorder.value,
-                'app-active-bg': appActiveBg.value,
-                'app-focus-border': appFocusBorder.value
+            settingsTheme: {
+                'settings-bg-color': settingsBgColor.value
             },
             customVars: {
                 'demo-bg': demoElementBg.value,

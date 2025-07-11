@@ -412,7 +412,7 @@
                 border-radius: 4px;
 
                 &:hover:not(:disabled) {
-                    background: var(--tags-item-hover-bg);
+                    background: var(--el-color-primary-light-8);
                     color: var(--el-color-primary);
                 }
 

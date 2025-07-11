@@ -2,6 +2,7 @@
 [data-theme='light'] {
     // 全局基础色彩
     --app-bg-color: #fafbfc;
+    --app-bg-secondary: #f7f8fa;
     --app-text-color: #1d2129;
     --app-text-secondary: #4e5969;
     --app-text-placeholder: #86909c;
@@ -27,7 +28,6 @@
     --tags-bg-color: #ffffff;
     --tags-border-color: #e5e6eb;
     --tags-item-bg: #f7f8fa;
-    --tags-item-hover-bg: #e8f3ff;
 
     // 卡片组件
     --card-bg-color: #ffffff;
