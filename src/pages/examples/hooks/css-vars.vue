@@ -21,15 +21,68 @@
         </div>
 
         <div class="demo-content">
-            <!-- Element Plus 主色调 -->
-            <el-card shadow="never">
-                <el-button type="primary">primary</el-button>
-                <el-button type="success">success</el-button>
-                <el-button type="danger">danger</el-button>
-                <el-button type="warning">warning</el-button>
-                <el-button type="info">info</el-button>
-                <el-button type="default">default</el-button>
-            </el-card>
+            <!-- Element Plus 主题切换 -->
+            <div class="demo-section">
+                <h2>Element Plus 主题</h2>
+                <div class="theme-switch-section">
+                    <el-card class="theme-info-card" shadow="never">
+                        <div class="current-theme-info">
+                            <el-tag type="primary" size="large">当前 Element Plus 主题: {{ elementTheme }}</el-tag>
+                            <p class="theme-desc">Element Plus 组件会根据当前主题自动切换样式</p>
+                        </div>
+                        <div class="theme-switch-controls">
+                            <el-button-group>
+                                <el-button
+                                    :type="elementTheme === 'light' ? 'primary' : 'default'"
+                                    @click="setElementTheme('light')"
+                                    size="small">
+                                    <el-icon><Sunny /></el-icon>
+                                    浅色主题
+                                </el-button>
+                                <el-button
+                                    :type="elementTheme === 'dark' ? 'primary' : 'default'"
+                                    @click="setElementTheme('dark')"
+                                    size="small">
+                                    <el-icon><Moon /></el-icon>
+                                    深色主题
+                                </el-button>
+                            </el-button-group>
+                        </div>
+                    </el-card>
+
+                    <!-- Element Plus 组件预览 -->
+                    <el-card shadow="never" class="component-preview">
+                        <template #header>
+                            <span>Element Plus 组件预览</span>
+                        </template>
+                        <div class="preview-content">
+                            <div class="preview-row">
+                                <el-button type="primary">primary</el-button>
+                                <el-button type="success">success</el-button>
+                                <el-button type="danger">danger</el-button>
+                                <el-button type="warning">warning</el-button>
+                                <el-button type="info">info</el-button>
+                                <el-button type="default">default</el-button>
+                            </div>
+                            <div class="preview-row">
+                                <el-input placeholder="请输入内容" style="width: 200px" />
+                                <el-select placeholder="请选择" style="width: 120px">
+                                    <el-option label="选项1" value="1" />
+                                    <el-option label="选项2" value="2" />
+                                </el-select>
+                                <el-switch v-model="switchValue" />
+                            </div>
+                            <div class="preview-row">
+                                <el-tag>标签</el-tag>
+                                <el-tag type="success">成功</el-tag>
+                                <el-tag type="warning">警告</el-tag>
+                                <el-tag type="danger">危险</el-tag>
+                                <el-tag type="info">信息</el-tag>
+                            </div>
+                        </div>
+                    </el-card>
+                </div>
+            </div>
 
             <div class="demo-section">
                 <h2>Element Plus 主色调</h2>
@@ -109,6 +162,116 @@
                 <div class="vars-container">
                     <!-- 使用折叠面板组织变量 -->
                     <el-collapse>
+                        <el-collapse-item title="Element Plus 主题变量" name="element-plus">
+                            <div class="vars-grid">
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">背景色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker v-model="elBgColor" :predefine="predefineColors" />
+                                            <el-input v-model="elBgColor" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-bg-color</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">页面背景色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker v-model="elBgColorPage" :predefine="predefineColors" />
+                                            <el-input v-model="elBgColorPage" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-bg-color-page</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">文本色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker
+                                                v-model="elTextColorPrimary"
+                                                :predefine="predefineColors" />
+                                            <el-input v-model="elTextColorPrimary" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-text-color-primary</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">次要文本色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker
+                                                v-model="elTextColorRegular"
+                                                :predefine="predefineColors" />
+                                            <el-input v-model="elTextColorRegular" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-text-color-regular</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">次级文本色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker
+                                                v-model="elTextColorSecondary"
+                                                :predefine="predefineColors" />
+                                            <el-input v-model="elTextColorSecondary" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-text-color-secondary</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">占位符文本色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker
+                                                v-model="elTextColorPlaceholder"
+                                                :predefine="predefineColors" />
+                                            <el-input
+                                                v-model="elTextColorPlaceholder"
+                                                size="small"
+                                                class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-text-color-placeholder</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">边框色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker v-model="elBorderColor" :predefine="predefineColors" />
+                                            <el-input v-model="elBorderColor" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-border-color</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">浅边框色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker
+                                                v-model="elBorderColorLight"
+                                                :predefine="predefineColors" />
+                                            <el-input v-model="elBorderColorLight" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-border-color-light</small>
+                                    </div>
+                                </div>
+                                <div class="var-item">
+                                    <div class="var-info">
+                                        <label class="var-label">更浅边框色</label>
+                                        <div class="var-controls">
+                                            <el-color-picker
+                                                v-model="elBorderColorLighter"
+                                                :predefine="predefineColors" />
+                                            <el-input v-model="elBorderColorLighter" size="small" class="color-input" />
+                                        </div>
+                                        <small class="var-name">--el-border-color-lighter</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-collapse-item>
+
                         <el-collapse-item title="全局基础色彩" name="global">
                             <div class="vars-grid">
                                 <div class="var-item">
@@ -438,9 +601,15 @@
                         show-icon
                         :closable="false" />
                     <el-alert
+                        title="Element Plus 主题"
+                        type="primary"
+                        :description="`当前 Element Plus 主题: ${elementTheme}。Element Plus 组件使用独立的主题系统，通过 HTML 根元素的 class (${elementTheme}) 来控制。`"
+                        show-icon
+                        :closable="false" />
+                    <el-alert
                         title="实时生效"
                         type="info"
-                        description="修改颜色后会立即应用到整个项目界面，包括侧边栏、顶部导航、按钮等所有组件。"
+                        description="修改颜色后会立即应用到整个项目界面，包括侧边栏、顶部导航、按钮等所有组件。Element Plus 主题变量会直接影响所有 Element Plus 组件的外观。"
                         show-icon
                         :closable="false" />
                     <el-alert
@@ -532,6 +701,7 @@ const currentTheme = useCurrentTheme()
 
 <script setup lang="ts">
     import { useCssVar, useThemeCssVar, useCurrentTheme } from '~/hooks'
+    import { Sunny, Moon } from '@element-plus/icons-vue'
 
     // 示例元素引用
     const demoElement = ref<HTMLElement>()
@@ -539,6 +709,56 @@ const currentTheme = useCurrentTheme()
 
     // 获取当前主题
     const currentTheme = useCurrentTheme()
+
+    // Element Plus 主题状态
+    const elementTheme = ref<'light' | 'dark'>('light')
+    const switchValue = ref(false)
+
+    // 获取当前 Element Plus 主题
+    const getCurrentElementTheme = (): 'light' | 'dark' => {
+        const htmlElement = document.documentElement
+        return htmlElement.classList.contains('dark') ? 'dark' : 'light'
+    }
+
+    // 设置 Element Plus 主题
+    const setElementTheme = (theme: 'light' | 'dark') => {
+        const htmlElement = document.documentElement
+
+        // 移除现有主题类
+        htmlElement.classList.remove('light', 'dark')
+
+        // 添加新主题类
+        htmlElement.classList.add(theme)
+
+        // 更新状态
+        elementTheme.value = theme
+
+        // 保存到本地存储
+        localStorage.setItem('element-theme', theme)
+    }
+
+    // 初始化 Element Plus 主题
+    const initElementTheme = () => {
+        const savedTheme = localStorage.getItem('element-theme') as 'light' | 'dark' | null
+        const initialTheme = savedTheme || getCurrentElementTheme()
+        setElementTheme(initialTheme)
+    }
+
+    // 组件挂载时初始化
+    onMounted(() => {
+        initElementTheme()
+    })
+
+    // Element Plus 主题变量 - 直接设置到根元素
+    const elBgColor = useCssVar('--el-bg-color', undefined, { initialValue: '#ffffff' })
+    const elBgColorPage = useCssVar('--el-bg-color-page', undefined, { initialValue: '#f2f3f5' })
+    const elTextColorPrimary = useCssVar('--el-text-color-primary', undefined, { initialValue: '#303133' })
+    const elTextColorRegular = useCssVar('--el-text-color-regular', undefined, { initialValue: '#606266' })
+    const elTextColorSecondary = useCssVar('--el-text-color-secondary', undefined, { initialValue: '#909399' })
+    const elTextColorPlaceholder = useCssVar('--el-text-color-placeholder', undefined, { initialValue: '#a8abb2' })
+    const elBorderColor = useCssVar('--el-border-color', undefined, { initialValue: '#dcdfe6' })
+    const elBorderColorLight = useCssVar('--el-border-color-light', undefined, { initialValue: '#e4e7ed' })
+    const elBorderColorLighter = useCssVar('--el-border-color-lighter', undefined, { initialValue: '#ebeef5' })
 
     // 使用主题感知的 CSS 变量 - 会根据当前主题设置到对应的 [data-theme] 选择器
     const primaryColor = useThemeCssVar('--el-color-primary', '#409eff')
@@ -588,7 +808,7 @@ const currentTheme = useCurrentTheme()
     const cardBorderColor = useCssVar('--card-border', cardElement, { initialValue: '#e0e0e0' })
 
     // 计算总变量数量
-    const totalVariablesCount = computed(() => 28)
+    const totalVariablesCount = computed(() => 37) // 增加了9个Element Plus主题变量
 
     // 预定义颜色
     const predefineColors = [
@@ -633,6 +853,17 @@ const currentTheme = useCurrentTheme()
 
         // 重新获取默认值
         const computedStyle = getComputedStyle(document.documentElement)
+
+        // Element Plus 主题变量
+        elBgColor.value = computedStyle.getPropertyValue('--el-bg-color').trim() || '#ffffff'
+        elBgColorPage.value = computedStyle.getPropertyValue('--el-bg-color-page').trim() || '#f2f3f5'
+        elTextColorPrimary.value = computedStyle.getPropertyValue('--el-text-color-primary').trim() || '#303133'
+        elTextColorRegular.value = computedStyle.getPropertyValue('--el-text-color-regular').trim() || '#606266'
+        elTextColorSecondary.value = computedStyle.getPropertyValue('--el-text-color-secondary').trim() || '#909399'
+        elTextColorPlaceholder.value = computedStyle.getPropertyValue('--el-text-color-placeholder').trim() || '#a8abb2'
+        elBorderColor.value = computedStyle.getPropertyValue('--el-border-color').trim() || '#dcdfe6'
+        elBorderColorLight.value = computedStyle.getPropertyValue('--el-border-color-light').trim() || '#e4e7ed'
+        elBorderColorLighter.value = computedStyle.getPropertyValue('--el-border-color-lighter').trim() || '#ebeef5'
 
         // Element Plus 颜色
         primaryColor.value = computedStyle.getPropertyValue('--el-color-primary').trim() || '#409eff'
@@ -687,6 +918,18 @@ const currentTheme = useCurrentTheme()
     const exportCurrentVars = () => {
         const config = {
             theme: currentTheme.value,
+            elementTheme: elementTheme.value,
+            elementPlusThemeVars: {
+                'el-bg-color': elBgColor.value,
+                'el-bg-color-page': elBgColorPage.value,
+                'el-text-color-primary': elTextColorPrimary.value,
+                'el-text-color-regular': elTextColorRegular.value,
+                'el-text-color-secondary': elTextColorSecondary.value,
+                'el-text-color-placeholder': elTextColorPlaceholder.value,
+                'el-border-color': elBorderColor.value,
+                'el-border-color-light': elBorderColorLight.value,
+                'el-border-color-lighter': elBorderColorLighter.value
+            },
             elementPlusColors: {
                 'el-color-primary': primaryColor.value,
                 'el-color-success': successColor.value,
@@ -806,6 +1049,56 @@ const currentTheme = useCurrentTheme()
                     font-size: 18px;
                     color: var(--app-text-color);
                     margin-bottom: 12px;
+                }
+            }
+        }
+
+        // Element Plus 主题切换样式
+        .theme-switch-section {
+            margin-bottom: 32px;
+
+            .theme-info-card {
+                margin-bottom: 20px;
+
+                .current-theme-info {
+                    text-align: center;
+                    margin-bottom: 20px;
+
+                    .theme-desc {
+                        margin: 12px 0 0 0;
+                        color: var(--app-text-secondary);
+                        font-size: 14px;
+                    }
+                }
+
+                .theme-switch-controls {
+                    display: flex;
+                    justify-content: center;
+
+                    .el-button-group {
+                        .el-button {
+                            padding: 8px 16px;
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                        }
+                    }
+                }
+            }
+
+            .component-preview {
+                .preview-content {
+                    .preview-row {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        margin-bottom: 16px;
+                        flex-wrap: wrap;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
                 }
             }
         }
