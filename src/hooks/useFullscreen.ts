@@ -1,5 +1,12 @@
 import { useSettingsStore } from '../store/modules/settings'
 
+// 全局状态，确保所有实例共享同一个状态
+const globalFullscreenState = {
+    isSupported: ref(false),
+    isFullscreen: ref(false),
+    initialized: ref(false)
+}
+
 /**
  * 全屏管理Hook
  * 提供全屏切换、全屏状态检测等功能
@@ -7,20 +14,28 @@ import { useSettingsStore } from '../store/modules/settings'
 export function useFullscreen() {
     const settingsStore = useSettingsStore()
 
-    // 是否支持全屏
-    const isSupported = ref(false)
-
-    // 是否处于全屏状态
-    const isFullscreen = ref(false)
+    // 使用全局状态
+    const isSupported = globalFullscreenState.isSupported
+    const isFullscreen = globalFullscreenState.isFullscreen
 
     // 检查全屏支持
     const checkSupport = () => {
-        isSupported.value = !!(
-            document.fullscreenEnabled ||
-            (document as any).webkitFullscreenEnabled ||
-            (document as any).mozFullScreenEnabled ||
-            (document as any).msFullscreenEnabled
+        const standardSupported = 'fullscreenEnabled' in document && document.fullscreenEnabled
+        const webkitSupported = 'webkitFullscreenEnabled' in document && (document as any).webkitFullscreenEnabled
+        const mozSupported = 'mozFullScreenEnabled' in document && (document as any).mozFullScreenEnabled
+        const msSupported = 'msFullscreenEnabled' in document && (document as any).msFullscreenEnabled
+
+        // 检查requestFullscreen方法是否存在
+        const hasRequestMethod = !!(
+            document.documentElement.requestFullscreen ||
+            (document.documentElement as any).webkitRequestFullscreen ||
+            (document.documentElement as any).mozRequestFullScreen ||
+            (document.documentElement as any).msRequestFullscreen
         )
+
+        const supported = standardSupported || webkitSupported || mozSupported || msSupported || hasRequestMethod
+        isSupported.value = supported
+        return supported
     }
 
     // 更新全屏状态
@@ -36,8 +51,10 @@ export function useFullscreen() {
     }
 
     // 进入全屏
-    const enterFullscreen = async (element?: HTMLElement) => {
-        if (!isSupported.value) return false
+    const enterFullscreen = async (element?: HTMLElement | Element) => {
+        if (!isSupported.value) {
+            return false
+        }
 
         const targetElement = element || document.documentElement
 
@@ -50,6 +67,8 @@ export function useFullscreen() {
                 await (targetElement as any).mozRequestFullScreen()
             } else if ((targetElement as any).msRequestFullscreen) {
                 await (targetElement as any).msRequestFullscreen()
+            } else {
+                return false
             }
             return true
         } catch (error) {
@@ -80,7 +99,7 @@ export function useFullscreen() {
     }
 
     // 切换全屏
-    const toggleFullscreen = async (element?: HTMLElement) => {
+    const toggleFullscreen = async (element?: HTMLElement | Element) => {
         if (isFullscreen.value) {
             return await exitFullscreen()
         } else {
@@ -101,6 +120,11 @@ export function useFullscreen() {
     }
 
     const init = () => {
+        // 防止重复初始化
+        if (globalFullscreenState.initialized.value) {
+            return
+        }
+
         checkSupport()
         updateFullscreenStatus()
 
@@ -110,14 +134,22 @@ export function useFullscreen() {
         document.addEventListener('mozfullscreenchange', handleFullscreenChange)
         document.addEventListener('MSFullscreenChange', handleFullscreenChange)
         document.addEventListener('keydown', handleKeydown)
+
+        globalFullscreenState.initialized.value = true
     }
 
     const dispose = () => {
+        if (!globalFullscreenState.initialized.value) {
+            return
+        }
+
         document.removeEventListener('fullscreenchange', handleFullscreenChange)
         document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
         document.removeEventListener('mozfullscreenchange', handleFullscreenChange)
         document.removeEventListener('MSFullscreenChange', handleFullscreenChange)
         document.removeEventListener('keydown', handleKeydown)
+
+        globalFullscreenState.initialized.value = false
     }
 
     return {

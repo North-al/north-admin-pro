@@ -116,6 +116,17 @@ export const examplesRoutes: RouteRecordRaw[] = [
                             keepAlive: true,
                             badge: ''
                         }
+                    },
+                    {
+                        path: 'fullscreen',
+                        name: 'ExamplesHooksFullscreen',
+                        component: () => import('~/pages/examples/hooks/fullscreen.vue'),
+                        meta: {
+                            title: '全屏功能Hook',
+                            icon: 'FullScreen',
+                            keepAlive: true,
+                            badge: ''
+                        }
                     }
                 ]
             }
