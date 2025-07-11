@@ -1,32 +1,17 @@
 <script setup lang="ts">
-    import { useSettingsStore } from '../../store/modules/settings'
-    import ContextMenu, { type ContextMenuItem } from '../../components/ContextMenu.vue'
-
-    interface TagItem {
-        name: string
-        path: string
-        title: string
-        closable: boolean
-        fixed: boolean
-    }
+    import { useSettingsStore, useTagsViewStore, type TagItem } from '~/store/modules'
+    import ContextMenu, { type ContextMenuItem } from '~/components/ContextMenu.vue'
 
     const route = useRoute()
     const router = useRouter()
     const settingsStore = useSettingsStore()
+    const tagsViewStore = useTagsViewStore()
 
     // 标签页是否启用
     const tagsViewEnabled = computed(() => settingsStore.tagsViewEnabled)
 
     // 标签页列表
-    const tags = ref<TagItem[]>([
-        {
-            name: 'Dashboard',
-            path: '/dashboard',
-            title: '工作台',
-            closable: false,
-            fixed: true
-        }
-    ])
+    const tags = computed(() => tagsViewStore.tags)
 
     // 当前激活的标签页
     const activeTag = computed(() => route.path)
@@ -38,11 +23,7 @@
     const showScrollButtons = ref(false)
     const canScrollLeft = ref(false)
     const canScrollRight = ref(false)
-
-    // 响应式状态
     const containerWidth = ref(0)
-    const isSmallScreen = computed(() => containerWidth.value < 768)
-    const isVerySmallScreen = computed(() => containerWidth.value < 480)
 
     // 右键菜单相关
     const contextMenuVisible = ref(false)
@@ -53,12 +34,8 @@
     const contextMenuItems = computed((): ContextMenuItem[] => {
         if (!contextMenuTag.value) return []
 
-        return [
-            {
-                key: 'refresh',
-                label: '刷新页面',
-                icon: 'Refresh'
-            },
+        const items = [
+            { key: 'refresh', label: '刷新页面', icon: 'Refresh' },
             {
                 key: 'fixed',
                 label: contextMenuTag.value.fixed ? '取消固定' : '固定标签',
@@ -66,41 +43,19 @@
                 disabled: !contextMenuTag.value.closable,
                 divided: true
             },
-            {
-                key: 'close',
-                label: '关闭标签',
-                icon: 'Close',
-                disabled: !contextMenuTag.value.closable
-            },
-            {
-                key: 'close-others',
-                label: '关闭其他',
-                icon: 'CircleClose'
-            },
-            {
-                key: 'close-left',
-                label: '关闭左侧',
-                icon: 'ArrowLeft'
-            },
-            {
-                key: 'close-right',
-                label: '关闭右侧',
-                icon: 'ArrowRight'
-            },
-            {
-                key: 'close-all',
-                label: '关闭所有',
-                icon: 'FolderDelete'
-            }
+            { key: 'close', label: '关闭标签', icon: 'Close', disabled: !contextMenuTag.value.closable },
+            { key: 'close-others', label: '关闭其他', icon: 'CircleClose' },
+            { key: 'close-left', label: '关闭左侧', icon: 'ArrowLeft' },
+            { key: 'close-right', label: '关闭右侧', icon: 'ArrowRight' },
+            { key: 'close-all', label: '关闭所有', icon: 'FolderDelete' }
         ]
+
+        return items
     })
 
     // 添加标签页
     const addTag = (tag: TagItem) => {
-        const existingTag = tags.value.find(t => t.path === tag.path)
-        if (!existingTag) {
-            tags.value.push(tag)
-        }
+        tagsViewStore.addTag(tag)
         // 滚动到新添加的标签页
         nextTick(() => {
             updateScrollButtons()
@@ -109,22 +64,17 @@
     }
 
     // 关闭标签页
-    const removeTag = (targetPath: string, force = false) => {
-        const targetIndex = tags.value.findIndex(tag => tag.path === targetPath)
-        if (targetIndex === -1) return
-
-        const targetTag = tags.value[targetIndex]
-        if (!targetTag.closable && !force) return
-
+    const removeTag = (targetPath: string) => {
         // 如果关闭的是当前激活的标签页，需要切换到其他标签页
         if (targetPath === activeTag.value) {
-            const nextTag = tags.value[targetIndex + 1] || tags.value[targetIndex - 1]
+            const currentIndex = tags.value.findIndex(tag => tag.path === targetPath)
+            const nextTag = tags.value[currentIndex + 1] || tags.value[currentIndex - 1]
             if (nextTag) {
                 router.push(nextTag.path)
             }
         }
 
-        tags.value.splice(targetIndex, 1)
+        tagsViewStore.removeTag(targetPath)
 
         nextTick(() => {
             updateScrollButtons()
@@ -146,15 +96,12 @@
 
     // 固定/取消固定标签页
     const toggleFixedTag = (targetPath: string) => {
-        const tag = tags.value.find(t => t.path === targetPath)
-        if (tag) {
-            tag.fixed = !tag.fixed
-        }
+        tagsViewStore.toggleFixed(targetPath)
     }
 
     // 关闭其他标签页
     const closeOthers = (targetPath: string) => {
-        tags.value = tags.value.filter(tag => tag.path === targetPath || !tag.closable || tag.fixed)
+        tagsViewStore.closeOthers(targetPath)
         if (activeTag.value !== targetPath) {
             router.push(targetPath)
         }
@@ -165,8 +112,13 @@
 
     // 关闭所有可关闭的标签页
     const closeAll = () => {
-        tags.value = tags.value.filter(tag => !tag.closable || tag.fixed)
-        router.push('/dashboard')
+        tagsViewStore.closeAll()
+        // 如果还有标签，跳转到第一个，否则跳转到首页
+        if (tags.value.length > 0) {
+            router.push(tags.value[0].path)
+        } else {
+            router.push('/')
+        }
         nextTick(() => {
             updateScrollButtons()
         })
@@ -174,27 +126,41 @@
 
     // 关闭左侧标签页
     const closeLeft = (targetPath: string) => {
+        // 如果当前激活的标签在要删除的列表中，需要切换
         const targetIndex = tags.value.findIndex(tag => tag.path === targetPath)
-        if (targetIndex === -1) return
+        if (targetIndex > 0) {
+            const leftTags = tags.value.slice(0, targetIndex)
+            const pathsToRemove = leftTags.filter(tag => tag.closable && !tag.fixed).map(tag => tag.path)
 
-        const leftTags = tags.value.slice(0, targetIndex)
-        leftTags.forEach(tag => {
-            if (tag.closable && !tag.fixed) {
-                removeTag(tag.path, true)
+            if (pathsToRemove.includes(activeTag.value)) {
+                router.push(targetPath)
             }
+        }
+
+        tagsViewStore.closeLeft(targetPath)
+
+        nextTick(() => {
+            updateScrollButtons()
         })
     }
 
     // 关闭右侧标签页
     const closeRight = (targetPath: string) => {
+        // 如果当前激活的标签在要删除的列表中，需要切换
         const targetIndex = tags.value.findIndex(tag => tag.path === targetPath)
-        if (targetIndex === -1) return
+        if (targetIndex < tags.value.length - 1) {
+            const rightTags = tags.value.slice(targetIndex + 1)
+            const pathsToRemove = rightTags.filter(tag => tag.closable && !tag.fixed).map(tag => tag.path)
 
-        const rightTags = tags.value.slice(targetIndex + 1)
-        rightTags.forEach(tag => {
-            if (tag.closable && !tag.fixed) {
-                removeTag(tag.path, true)
+            if (pathsToRemove.includes(activeTag.value)) {
+                router.push(targetPath)
             }
+        }
+
+        tagsViewStore.closeRight(targetPath)
+
+        nextTick(() => {
+            updateScrollButtons()
         })
     }
 
@@ -208,8 +174,8 @@
         // 更新容器宽度
         containerWidth.value = clientWidth
 
-        // 小屏幕时不显示滚动按钮，直接允许滚动
-        showScrollButtons.value = scrollWidth > clientWidth && !isVerySmallScreen.value
+        // 当内容宽度超过容器宽度时显示滚动按钮
+        showScrollButtons.value = scrollWidth > clientWidth
         canScrollLeft.value = scrollLeft > 0
         canScrollRight.value = scrollLeft < scrollWidth - clientWidth
     }
@@ -306,8 +272,19 @@
                     name: (newRoute.name as string) || newRoute.path,
                     path: newRoute.path,
                     title: newRoute.meta.title as string,
-                    closable: newRoute.path !== '/dashboard',
-                    fixed: newRoute.path === '/dashboard'
+                    closable: newRoute.meta?.closable !== false, // 默认可关闭，除非明确设置为false
+                    fixed: newRoute.meta?.fixed === true, // 默认不固定，除非明确设置为true
+                    icon: newRoute.meta?.icon as string
+                })
+            } else if (newRoute.path) {
+                // 如果路由没有title，使用路径作为标题（临时测试）
+                addTag({
+                    name: (newRoute.name as string) || newRoute.path,
+                    path: newRoute.path,
+                    title: newRoute.path,
+                    closable: true,
+                    fixed: false,
+                    icon: newRoute.meta?.icon as string
                 })
             }
         },
@@ -346,7 +323,7 @@
 </script>
 
 <template>
-    <div v-if="tagsViewEnabled" class="tags-view">
+    <div v-if="tagsViewEnabled && tags.length > 0" class="tags-view">
         <!-- 滚动控制按钮 -->
         <div v-if="showScrollButtons" class="scroll-buttons">
             <el-button :disabled="!canScrollLeft" class="scroll-button scroll-left" size="small" @click="scrollToLeft">
@@ -375,19 +352,17 @@
                 @click="handleTagClick(tag)"
                 @contextmenu="handleContextMenu($event, tag)">
                 <!-- 固定标签图标 -->
-                <el-icon v-if="tag.fixed && tag.path !== '/dashboard'" class="fixed-icon">
+                <el-icon v-if="tag.fixed" class="fixed-icon">
                     <Lock />
                 </el-icon>
 
-                <!-- 首页图标 -->
-                <el-icon v-if="tag.path === '/dashboard'" class="home-icon">
-                    <House />
+                <!-- 标签图标 -->
+                <el-icon v-else-if="tag.icon" class="tag-icon">
+                    <component :is="tag.icon" />
                 </el-icon>
 
                 <!-- 标签标题 -->
-                <span class="tag-title" :class="{ 'has-icon': tag.fixed || tag.path === '/dashboard' }">{{
-                    tag.title
-                }}</span>
+                <span class="tag-title" :class="{ 'has-icon': tag.fixed || tag.icon }">{{ tag.title }}</span>
 
                 <!-- 关闭按钮 -->
                 <el-icon v-if="tag.closable" class="close-icon" @click.stop="removeTag(tag.path)">
@@ -412,10 +387,9 @@
         position: relative;
         height: 40px;
         background: var(--tags-bg-color);
-        border-bottom: 1px solid var(--tags-border-color);
+        // border-bottom: 1px solid var(--tags-border-color);
         display: flex;
         align-items: center;
-        transition: all 0.3s ease;
 
         .scroll-buttons {
             position: absolute;
@@ -427,7 +401,7 @@
             background: var(--tags-bg-color);
             border-left: 1px solid var(--tags-border-color);
             z-index: 10;
-            padding: 0 6px;
+            padding: 0 4px;
 
             .scroll-button {
                 width: 24px;
@@ -435,19 +409,15 @@
                 margin: 0 1px;
                 border: 1px solid var(--tags-border-color);
                 background: var(--tags-item-bg);
-                color: var(--app-text-color);
-                transition: all 0.3s ease;
                 border-radius: 4px;
 
                 &:hover:not(:disabled) {
                     background: var(--tags-item-hover-bg);
                     color: var(--el-color-primary);
-                    border-color: var(--el-color-primary-light-8);
                 }
 
                 &:disabled {
                     opacity: 0.3;
-                    cursor: not-allowed;
                 }
             }
         }
@@ -459,19 +429,16 @@
             overflow-y: hidden;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease;
 
             &.has-scroll {
-                padding-right: 65px;
+                padding-right: 58px;
             }
 
-            // 隐藏滚动条
             &::-webkit-scrollbar {
                 display: none;
             }
 
             .tag-item {
-                position: relative;
                 display: flex;
                 align-items: center;
                 height: 28px;
@@ -485,52 +452,44 @@
                 user-select: none;
                 white-space: nowrap;
                 font-size: 12px;
-                font-weight: 400;
-                transition: all 0.2s ease;
-                min-width: 60px;
 
                 &:hover {
-                    background: var(--tags-item-hover-bg);
                     color: var(--el-color-primary);
-                    border-color: var(--el-color-primary-light-8);
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+
+                    .tag-icon,
+                    .fixed-icon {
+                        color: var(--el-color-primary);
+                    }
                 }
 
                 &.active {
-                    background: var(--tags-item-active-bg);
-                    color: var(--tags-item-active-color);
+                    color: var(--el-color-primary);
                     border-color: var(--el-color-primary);
-                    box-shadow: 0 2px 6px rgba(24, 144, 255, 0.15);
-                }
 
-                &.fixed {
+                    .tag-icon,
                     .fixed-icon {
-                        color: var(--el-color-warning);
-                        margin-right: 4px;
-                        font-size: 12px;
-                        opacity: 0.8;
+                        color: var(--el-color-primary);
                     }
                 }
 
-                // 首页标签样式
-                .home-icon {
-                    color: var(--el-color-primary);
+                .fixed-icon {
+                    color: var(--el-color-warning);
+                    margin-right: 4px;
+                    font-size: 12px;
+                    opacity: 0.8;
+                    transition: color 0.2s ease;
+                }
+
+                .tag-icon {
+                    color: var(--app-text-color);
                     margin-right: 4px;
                     font-size: 12px;
                     opacity: 0.9;
+                    transition: color 0.2s ease;
                 }
 
                 .tag-title {
-                    flex: 1;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
                     white-space: nowrap;
-                    max-width: 120px;
-                    font-weight: 400;
-
-                    &.has-icon {
-                        max-width: 100px;
-                    }
                 }
 
                 .close-icon {
@@ -539,7 +498,6 @@
                     border-radius: 50%;
                     font-size: 12px;
                     opacity: 0.7;
-                    transition: all 0.2s ease;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
@@ -554,44 +512,32 @@
                         transform: scale(1.1);
                     }
                 }
-
-                &:not(.closable) {
-                    .tag-title {
-                        max-width: 120px;
-                    }
-                }
-
-                // 活跃状态下的特殊样式
-                &.active {
-                    .close-icon:hover {
-                        background: rgba(255, 255, 255, 0.2);
-                    }
-                }
             }
         }
     }
 
-    // 响应式样式
     @media (max-width: 768px) {
         .tags-view {
+            .scroll-buttons {
+                padding: 0 3px;
+
+                .scroll-button {
+                    width: 20px;
+                    height: 20px;
+                    margin: 0;
+                }
+            }
+
             .tags-container {
+                &.has-scroll {
+                    padding-right: 50px;
+                }
+
                 .tag-item {
-                    min-width: 50px;
-                    padding: 0 8px;
-
-                    .tag-title {
-                        max-width: 80px;
-
-                        &.has-icon {
-                            max-width: 60px;
-                        }
-                    }
-
                     .close-icon {
                         width: 16px;
                         height: 16px;
                         font-size: 10px;
-                        margin-left: 4px;
                     }
                 }
             }
@@ -600,21 +546,26 @@
 
     @media (max-width: 480px) {
         .tags-view {
+            .scroll-buttons {
+                padding: 0 2px;
+
+                .scroll-button {
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+
             .tags-container {
+                &.has-scroll {
+                    padding-right: 44px;
+                }
+
                 .tag-item {
-                    min-width: 40px;
-                    padding: 0 6px;
-
                     .tag-title {
-                        max-width: 60px;
                         font-size: 11px;
-
-                        &.has-icon {
-                            max-width: 40px;
-                        }
                     }
 
-                    .home-icon,
+                    .tag-icon,
                     .fixed-icon {
                         font-size: 10px;
                         margin-right: 2px;
@@ -624,7 +575,6 @@
                         width: 14px;
                         height: 14px;
                         font-size: 9px;
-                        margin-left: 2px;
                     }
                 }
             }

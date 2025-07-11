@@ -8,14 +8,6 @@
     const props = defineProps<Props>()
     const router = useRouter()
 
-    // 容器引用
-    const breadcrumbRef = ref<HTMLElement>()
-    const containerWidth = ref(0)
-
-    // 响应式状态
-    const isSmallScreen = computed(() => containerWidth.value < 600)
-    const isVerySmallScreen = computed(() => containerWidth.value < 400)
-
     // 处理面包屑点击
     const handleClick = (item: BreadcrumbItem, index: number, items: BreadcrumbItem[]) => {
         // 如果不是最后一项，则可以点击跳转
@@ -24,32 +16,11 @@
         }
     }
 
-    // 判断是否显示面包屑
-    const shouldShow = computed(() => {
-        // 很小屏幕时直接隐藏
-        if (isVerySmallScreen.value) return false
-        // 有内容就显示
-        return props.items.length > 0
-    })
-
-    // 监听容器尺寸变化
-    onMounted(() => {
-        if (breadcrumbRef.value) {
-            const resizeObserver = new ResizeObserver(() => {
-                if (breadcrumbRef.value) {
-                    containerWidth.value = breadcrumbRef.value.clientWidth
-                }
-            })
-            resizeObserver.observe(breadcrumbRef.value)
-
-            // 初始化宽度
-            containerWidth.value = breadcrumbRef.value.clientWidth
-        }
-    })
+    const shouldShow = computed(() => props.items.length > 0)
 </script>
 
 <template>
-    <div v-if="shouldShow" ref="breadcrumbRef" class="breadcrumb-container" :class="{ 'small-screen': isSmallScreen }">
+    <div v-if="shouldShow" class="breadcrumb-container">
         <el-breadcrumb separator="/">
             <el-breadcrumb-item
                 v-for="(item, index) in items"
@@ -71,21 +42,6 @@
         padding-left: 12px;
         border-left: 1px solid var(--app-border-color);
         transition: all 0.3s ease;
-
-        &.small-screen {
-            margin-left: 8px;
-            padding-left: 8px;
-
-            :deep(.el-breadcrumb) {
-                font-size: 12px;
-
-                .el-breadcrumb__item {
-                    .el-breadcrumb__separator {
-                        margin: 0 4px;
-                    }
-                }
-            }
-        }
 
         :deep(.el-breadcrumb) {
             font-size: 14px;
@@ -127,18 +83,7 @@
     // 响应式样式
     @media (max-width: 600px) {
         .breadcrumb-container {
-            margin-left: 8px;
-            padding-left: 8px;
-
-            :deep(.el-breadcrumb) {
-                font-size: 12px;
-
-                .el-breadcrumb__item {
-                    .el-breadcrumb__separator {
-                        margin: 0 4px;
-                    }
-                }
-            }
+            display: none;
         }
     }
 </style>
