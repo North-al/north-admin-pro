@@ -416,26 +416,28 @@
             background: var(--tags-bg-color);
             border-left: 1px solid var(--tags-border-color);
             z-index: 10;
-            padding: 0 6px;
+            padding: 0 8px;
 
             .scroll-button {
-                width: 24px;
-                height: 24px;
-                margin: 0 1px;
-                border: 1px solid var(--tags-border-color);
+                width: 26px;
+                height: 26px;
+                margin: 0 2px;
+                border: none;
                 background: var(--tags-item-bg);
                 color: var(--app-text-color);
-                transition: all 0.3s ease;
-                border-radius: 4px;
+                transition: all 0.2s ease;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
                 &:hover:not(:disabled) {
                     background: var(--tags-item-hover-bg);
                     color: var(--el-color-primary);
-                    border-color: var(--el-color-primary-light-8);
                 }
 
                 &:disabled {
-                    opacity: 0.3;
+                    opacity: 0.4;
                     cursor: not-allowed;
                 }
             }
@@ -464,40 +466,39 @@
                 position: relative;
                 display: flex;
                 align-items: center;
-                height: 28px;
-                padding: 0 10px;
-                margin-right: 6px;
+                height: 30px;
+                padding: 0 12px;
+                margin-right: 8px;
                 background: var(--tags-item-bg);
                 color: var(--app-text-color);
-                border: 1px solid var(--tags-border-color);
-                border-radius: 4px;
+                border: 1px solid transparent;
+                border-radius: 6px;
                 cursor: pointer;
                 user-select: none;
                 white-space: nowrap;
-                font-size: 12px;
+                font-size: 13px;
                 font-weight: 400;
                 transition: all 0.2s ease;
-                min-width: 60px;
+                min-width: 70px;
 
                 &:hover {
                     background: var(--tags-item-hover-bg);
                     color: var(--el-color-primary);
                     border-color: var(--el-color-primary-light-8);
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
                 }
 
                 &.active {
                     background: var(--tags-item-active-bg);
                     color: var(--tags-item-active-color);
                     border-color: var(--el-color-primary);
-                    box-shadow: 0 2px 6px rgba(24, 144, 255, 0.15);
+                    font-weight: 500;
                 }
 
                 &.fixed {
                     .fixed-icon {
                         color: var(--el-color-warning);
-                        margin-right: 4px;
-                        font-size: 10px;
+                        margin-right: 5px;
+                        font-size: 11px;
                         opacity: 0.8;
                     }
                 }
@@ -507,32 +508,34 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    max-width: 100px;
-                    font-weight: 400;
+                    max-width: 120px;
+                    font-weight: inherit;
                 }
 
                 .close-icon {
-                    margin-left: 4px;
-                    padding: 2px;
-                    border-radius: 50%;
-                    font-size: 10px;
+                    margin-left: 6px;
+                    padding: 3px;
+                    border-radius: 4px;
+                    font-size: 11px;
                     opacity: 0.6;
                     transition: all 0.2s ease;
                     cursor: pointer;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    width: 16px;
+                    height: 16px;
 
                     &:hover {
                         opacity: 1;
-                        background: rgba(255, 255, 255, 0.15);
+                        background: rgba(0, 0, 0, 0.1);
                         color: var(--el-color-danger);
                     }
                 }
 
                 &:not(.closable) {
                     .tag-title {
-                        max-width: 120px;
+                        max-width: 140px;
                     }
                 }
 
@@ -540,6 +543,7 @@
                 &.active {
                     .close-icon:hover {
                         background: rgba(255, 255, 255, 0.2);
+                        color: #ffffff;
                     }
                 }
             }
