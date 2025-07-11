@@ -95,23 +95,32 @@
 }
 
 ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-bg);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-bg);
     border-radius: 4px;
     transition: background-color 0.3s ease;
+
+    &:hover {
+        background: var(--scrollbar-thumb-hover-bg);
+    }
 }
 
 /* 子菜单弹出层的全局样式覆盖 */
 .el-popper .el-menu--popup-container {
     background-color: var(--sidebar-bg-color) !important;
+
     .el-menu--popup {
         background: var(--sidebar-bg-color) !important;
         border: 1px solid var(--sidebar-border-color) !important;
         box-shadow: 0 4px 20px var(--app-shadow-color) !important;
         border-radius: 8px !important;
         padding: 4px 0 !important;
+        transform: none !important;
+        margin-top: 0 !important;
 
         .el-menu-item {
             color: var(--sidebar-text-color) !important;
@@ -148,7 +157,3 @@
         }
     }
 }
-
-// :global(.el-popper[data-popper-placement]) {
-//     background-color: transparent !important;
-// }
