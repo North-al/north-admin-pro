@@ -164,13 +164,8 @@
 
 <style scoped>
     /* 设置面板适配主题 */
-    .settings-panel {
-        background: var(--settings-bg-color);
-    }
-
     .settings-content {
         padding: 0;
-        background: var(--settings-bg-color);
     }
 
     .settings-section {

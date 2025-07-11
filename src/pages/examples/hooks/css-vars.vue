@@ -22,6 +22,15 @@
 
         <div class="demo-content">
             <!-- Element Plus 主色调 -->
+            <el-card shadow="never">
+                <el-button type="primary">primary</el-button>
+                <el-button type="success">success</el-button>
+                <el-button type="danger">danger</el-button>
+                <el-button type="warning">warning</el-button>
+                <el-button type="info">info</el-button>
+                <el-button type="default">default</el-button>
+            </el-card>
+
             <div class="demo-section">
                 <h2>Element Plus 主色调</h2>
                 <div class="color-grid">
@@ -227,31 +236,12 @@
                                 </div>
                                 <div class="var-item">
                                     <div class="var-info">
-                                        <label class="var-label">文本色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker v-model="headerTextColor" :predefine="predefineColors" />
-                                            <el-input v-model="headerTextColor" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--header-text-color</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
                                         <label class="var-label">边框色</label>
                                         <div class="var-controls">
                                             <el-color-picker v-model="headerBorderColor" :predefine="predefineColors" />
                                             <el-input v-model="headerBorderColor" size="small" class="color-input" />
                                         </div>
                                         <small class="var-name">--header-border-color</small>
-                                    </div>
-                                </div>
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">阴影</label>
-                                        <div class="var-controls">
-                                            <el-input v-model="headerShadow" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--header-shadow</small>
                                     </div>
                                 </div>
                             </div>
@@ -335,6 +325,7 @@
                                     <div class="var-info">
                                         <label class="var-label">阴影</label>
                                         <div class="var-controls">
+                                            <el-color-picker v-model="cardShadow" :predefine="predefineColors" />
                                             <el-input v-model="cardShadow" size="small" class="color-input" />
                                         </div>
                                         <small class="var-name">--card-shadow</small>
@@ -385,24 +376,6 @@
                                                 class="color-input" />
                                         </div>
                                         <small class="var-name">--scrollbar-thumb-hover-bg</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </el-collapse-item>
-
-                        <el-collapse-item title="设置面板" name="settings">
-                            <div class="vars-grid">
-                                <div class="var-item">
-                                    <div class="var-info">
-                                        <label class="var-label">背景色</label>
-                                        <div class="var-controls">
-                                            <el-color-picker
-                                                v-model="settingsBgColor"
-                                                show-alpha
-                                                :predefine="predefineColors" />
-                                            <el-input v-model="settingsBgColor" size="small" class="color-input" />
-                                        </div>
-                                        <small class="var-name">--settings-bg-color</small>
                                     </div>
                                 </div>
                             </div>
@@ -590,9 +563,7 @@ const currentTheme = useCurrentTheme()
 
     // 顶部导航
     const headerBgColor = useThemeCssVar('--header-bg-color', '#ffffff')
-    const headerTextColor = useThemeCssVar('--header-text-color', '#1d2129')
     const headerBorderColor = useThemeCssVar('--header-border-color', '#e5e6eb')
-    const headerShadow = useThemeCssVar('--header-shadow', '0 2px 8px rgba(0, 0, 0, 0.06)')
 
     // 内容区域
     const contentBgColor = useThemeCssVar('--content-bg-color', '#fafbfc')
@@ -612,27 +583,12 @@ const currentTheme = useCurrentTheme()
     const scrollbarThumbBg = useThemeCssVar('--scrollbar-thumb-bg', 'rgba(0, 0, 0, 0.15)')
     const scrollbarThumbHoverBg = useThemeCssVar('--scrollbar-thumb-hover-bg', 'rgba(0, 0, 0, 0.25)')
 
-    // 设置面板
-    const settingsBgColor = useThemeCssVar('--settings-bg-color', '#ffffff')
-
     // 针对特定元素的 CSS 变量
     const demoElementBg = useCssVar('--demo-bg', demoElement, { initialValue: '#f0f0f0' })
     const cardBorderColor = useCssVar('--card-border', cardElement, { initialValue: '#e0e0e0' })
 
     // 计算总变量数量
-    const totalVariablesCount = computed(() => {
-        // Element Plus 颜色: 5个
-        // 全局基础色彩: 5个
-        // 侧边栏主题: 5个
-        // 顶部导航: 4个
-        // 内容区域: 1个
-        // 标签页: 4个
-        // 卡片组件: 3个
-        // 滚动条: 3个
-        // 设置面板: 1个
-        // 自定义元素: 2个
-        return 5 + 5 + 5 + 4 + 1 + 4 + 3 + 3 + 1 + 2 // = 33个主要变量
-    })
+    const totalVariablesCount = computed(() => 28)
 
     // 预定义颜色
     const predefineColors = [
@@ -701,9 +657,7 @@ const currentTheme = useCurrentTheme()
 
         // 顶部导航
         headerBgColor.value = computedStyle.getPropertyValue('--header-bg-color').trim() || '#ffffff'
-        headerTextColor.value = computedStyle.getPropertyValue('--header-text-color').trim() || '#1d2129'
         headerBorderColor.value = computedStyle.getPropertyValue('--header-border-color').trim() || '#e5e6eb'
-        headerShadow.value = computedStyle.getPropertyValue('--header-shadow').trim() || '0 2px 8px rgba(0, 0, 0, 0.06)'
 
         // 内容区域
         contentBgColor.value = computedStyle.getPropertyValue('--content-bg-color').trim() || '#fafbfc'
@@ -723,9 +677,6 @@ const currentTheme = useCurrentTheme()
         scrollbarThumbBg.value = computedStyle.getPropertyValue('--scrollbar-thumb-bg').trim() || 'rgba(0, 0, 0, 0.15)'
         scrollbarThumbHoverBg.value =
             computedStyle.getPropertyValue('--scrollbar-thumb-hover-bg').trim() || 'rgba(0, 0, 0, 0.25)'
-
-        // 设置面板
-        settingsBgColor.value = computedStyle.getPropertyValue('--settings-bg-color').trim() || '#ffffff'
 
         // 自定义元素变量
         demoElementBg.value = '#f0f0f0'
@@ -759,9 +710,7 @@ const currentTheme = useCurrentTheme()
             },
             headerTheme: {
                 'header-bg-color': headerBgColor.value,
-                'header-text-color': headerTextColor.value,
-                'header-border-color': headerBorderColor.value,
-                'header-shadow': headerShadow.value
+                'header-border-color': headerBorderColor.value
             },
             contentTheme: {
                 'content-bg-color': contentBgColor.value
@@ -769,8 +718,7 @@ const currentTheme = useCurrentTheme()
             tagsTheme: {
                 'tags-bg-color': tagsBgColor.value,
                 'tags-border-color': tagsBorderColor.value,
-                'tags-item-bg': tagsItemBg.value,
-                'tags-item-hover-bg': tagsItemHoverBg.value
+                'tags-item-bg': tagsItemBg.value
             },
             cardTheme: {
                 'card-bg-color': cardBgColor.value,
@@ -781,9 +729,6 @@ const currentTheme = useCurrentTheme()
                 'scrollbar-track-bg': scrollbarTrackBg.value,
                 'scrollbar-thumb-bg': scrollbarThumbBg.value,
                 'scrollbar-thumb-hover-bg': scrollbarThumbHoverBg.value
-            },
-            settingsTheme: {
-                'settings-bg-color': settingsBgColor.value
             },
             customVars: {
                 'demo-bg': demoElementBg.value,

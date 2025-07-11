@@ -151,12 +151,9 @@
         // 使用主题变量
         background: var(--header-bg-color);
         border-bottom: 1px solid var(--header-border-color);
-        box-shadow: var(--header-shadow);
-        color: var(--header-text-color);
         transition: all 0.3s ease;
 
         .action-btn {
-            color: var(--header-text-color);
             padding: 8px;
 
             &:hover {
@@ -183,7 +180,6 @@
         }
 
         .user-info {
-            color: var(--header-text-color);
             border-radius: 6px;
             transition: all 0.2s ease;
 

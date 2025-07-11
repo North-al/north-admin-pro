@@ -58,26 +58,6 @@ button {
     transform: translateX(0);
 }
 
-/* 设置面板样式 */
-.settings-panel {
-    .el-drawer__header {
-        padding: 20px 24px;
-        margin-bottom: 0;
-        border-bottom: 1px solid var(--app-border-color);
-
-        .el-drawer__title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--app-text-color);
-        }
-    }
-
-    .el-drawer__body {
-        padding: 0;
-        background: var(--settings-bg-color);
-    }
-}
-
 .settings-content {
     height: 100%;
     overflow-y: auto;
