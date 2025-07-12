@@ -732,14 +732,11 @@ const currentTheme = useCurrentTheme()
 
         // 更新状态
         elementTheme.value = theme
-
-        // 保存到本地存储
-        localStorage.setItem('element-theme', theme)
     }
 
     // 初始化 Element Plus 主题
     const initElementTheme = () => {
-        const savedTheme = localStorage.getItem('element-theme') as 'light' | 'dark' | null
+        const savedTheme = localStorage.getItem('app-theme') as 'light' | 'dark' | null
         const initialTheme = savedTheme || getCurrentElementTheme()
         setElementTheme(initialTheme)
     }
