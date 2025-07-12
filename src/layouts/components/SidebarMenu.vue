@@ -36,7 +36,12 @@
             :collapse-transition="false"
             mode="vertical"
             class="sidebar-el-menu">
-            <MenuItem v-for="item in menuItems" :key="item.path" :item="item" @menu-click="handleMenuClick" />
+            <MenuItem
+                v-for="item in menuItems"
+                :key="item.path"
+                :item="item"
+                :collapsed="collapsed"
+                @menu-click="handleMenuClick" />
         </el-menu>
     </div>
 </template>
@@ -112,29 +117,10 @@
                     text-align: left;
                 }
                 .menu-badge {
-                    margin-left: auto;
-                    margin-right: 8px;
+                    margin: 0 8px;
                     flex-shrink: 0;
                     display: flex;
                     align-items: center;
-
-                    :deep(.el-badge__content) {
-                        background-color: var(--el-color-primary);
-                        border: none;
-                        font-size: 10px;
-                        height: 18px;
-                        line-height: 18px;
-                        padding: 0 6px;
-                        min-width: 18px;
-                        border-radius: 9px;
-                        font-weight: 600;
-                        color: #fff;
-                        position: static;
-                        transform: none;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
                 }
             } // 折叠状态下的样式
             &.el-menu--collapse {
@@ -153,11 +139,6 @@
                     }
 
                     .menu-title {
-                        display: none;
-                    }
-
-                    // 折叠时隐藏第一级的徽记
-                    .menu-badge {
                         display: none;
                     }
                 }
@@ -221,24 +202,6 @@
                             flex-shrink: 0;
                             display: flex;
                             align-items: center;
-
-                            :deep(.el-badge__content) {
-                                background-color: var(--el-color-primary);
-                                border: none;
-                                font-size: 9px;
-                                height: 16px;
-                                line-height: 16px;
-                                padding: 0 5px;
-                                min-width: 16px;
-                                border-radius: 8px;
-                                font-weight: 600;
-                                color: #fff;
-                                transform: none;
-                                position: static;
-                                display: inline-flex;
-                                align-items: center;
-                                justify-content: center;
-                            }
                         }
                     }
                 }
@@ -276,29 +239,10 @@
                             flex: 1;
                         }
                         .menu-badge {
-                            margin-left: auto;
-                            margin-right: 8px;
+                            margin: 0 8px;
                             flex-shrink: 0;
                             display: flex;
                             align-items: center;
-
-                            :deep(.el-badge__content) {
-                                background-color: var(--el-color-primary);
-                                border: none;
-                                font-size: 9px;
-                                height: 14px;
-                                line-height: 14px;
-                                padding: 0 4px;
-                                min-width: 14px;
-                                border-radius: 7px;
-                                font-weight: 600;
-                                color: #fff;
-                                transform: none;
-                                position: static;
-                                display: inline-flex;
-                                align-items: center;
-                                justify-content: center;
-                            }
                         }
 
                         &:hover {

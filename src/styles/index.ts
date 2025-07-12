@@ -11,4 +11,5 @@ export const setupStyles = () => {
 
     import('./el-light.scss')
     import('./el-dark.scss')
+    import('./element-plus.scss')
 }
