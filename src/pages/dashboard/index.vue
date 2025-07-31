@@ -6,7 +6,7 @@
     <div class="page-container">
         <el-card>
             <template #header>
-                <h2>仪表板</h2>
+                <h2>仪表板 - 测试构建</h2>
             </template>
 
             <div class="content">
