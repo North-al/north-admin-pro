@@ -1,4 +1,3 @@
-import { get } from '~/api'
-import type { PageResponse } from '~/api'
-
-export const fetchCompanyInfo = (params: any) => get<PageResponse<any>>('/company/info', params)
+// 导出用户API
+export * from './api'
+// export * from './type'
