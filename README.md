@@ -10,6 +10,8 @@
 
 ## 快速开始
 
+> 需要 nodejs 22+
+
 ```bash
 # 克隆项目
 git clone https://github.com/your-username/north-admin-pro.git
