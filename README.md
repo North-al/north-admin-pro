@@ -43,3 +43,4 @@ pnpm dev
 -   Element Plus
 -   Pinia
 -   Vue Router
+-   SCSS
