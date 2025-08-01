@@ -37,6 +37,9 @@ pnpm dev
 
 ## 技术栈
 
--   Vue 3- TypeScript
--   Vite- Element Plus
--   Pinia- Vue Router
+-   Vue 3
+-   TypeScript
+-   Vite
+-   Element Plus
+-   Pinia
+-   Vue Router
