@@ -1,15 +1,12 @@
 #!/bin/bash
 
 
-# 比如在 Jenkinsfile 中：environment { PROJECT_NAME = "my-vue-app" }
 # 1. 定义变量
 # ====================================================
 
-# 你的项目名称，用于生成 Nginx 配置文件名和部署路径
-
 SERVER_NAME="localhost" # 你可以根据实际情况修改为你的域名或 IP 地址
 
-# Jenkins 环境变量，如果未提供则使用默认值
+# 你的项目名称，用于生成 Nginx 配置文件名和部署路径
 PROJECT_NAME="north-admin-pro"
 
 # 你的项目在服务器上部署的根目录（Nginx root 指向的目录）
